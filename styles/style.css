@@ -20,4 +20,5 @@
 .recomendations-result-container {
     grid-row: 2;
     grid-column: 4/14;
+    display: grid;
 }
