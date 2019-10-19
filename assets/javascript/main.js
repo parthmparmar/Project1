@@ -15,21 +15,24 @@ $.ajax({
     method: "GET"
   })
     .then(function(response) {
-      console.log(typeof response);
+    //   console.log(typeof response);
              var result = JSON.parse(response).results;
         console.log(result);
         // console.log(response[0])
-        console.log(result[0].artworkUrl100);
-        console.log(result[0].artistName);
-        console.log(result[0].primaryGenreName);
-        console.log(result[0].trackName);      
-        console.log(result[0].previewUrl);
-        var artistName = $("<p>");
-        artistName.attr(result[0].artistName);
-        var artistImage = $("<img");
+        // console.log(result[0].artworkUrl100);
+        // console.log(result[0].artistName);
+        // console.log(result[0].primaryGenreName);
+        // console.log(result[0].trackName);      
+        // console.log(result[0].previewUrl);
+        var finalArtistName = $("<div>");
+       finalArtistName.attr("class", "artist-name");
+       finalArtistName.text(JSON.stringify(result[0].artistName));
+   
+        console.log(finalArtistName +"should be artistname");
+        var artistImage = $("<img>");
         artistImage.attr("src", result[0].artworkUrl100);
         artistImage.attr("alt", "artist");
-        $(".main-search-result-continer").append(artistName, artistImage);
+        $(".main-search-result-continer").append(artistImage, finalArtistName);
         
     });
 
