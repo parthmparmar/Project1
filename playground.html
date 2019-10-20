@@ -7,10 +7,41 @@
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="assets/styles/style.css">
     <title>Sign In</title>
 </head>
 <body>
-    <button id="login-button">Login</button>
+    <nav class="nav-bar">
+        <div id="nav-bar-seperator"></div>
+        <ul class="nav-bar-link-container">
+            <div class="page-link-container">
+                <a href="" class="page-link user-sign-up">Sign Up</a>
+            </div>
+            <div class="page-link-container">
+                <a href="" id="user-login" class="page-link">Login</a>
+            </div>
+            <div class="page-link-container">
+                <a href="" id="user-logout" class="page-link">Logout</a>
+            </div>
+        </ul>
+    </nav>
+    <!--SIGN UP MODAL-->
+    <div id="user-credentials-modal">
+        <form>
+            <h2 id="user-credential-input-title"></h2>
+            <div class="user-email-input-container user-input-container">
+                <label class="user-input-label" for="user-email-input">Email</label>
+                <input id="user-email-input" class="user-input" type="text" placeholder="Email">
+            </div>
+            <div class="user-password-container user-input-container">
+                <label class="user-input-label" for="user-password-input">Password</label>
+                <input id="user-password-input" class="user-input" type="text" placeholder="security123">
+            </div>
+            <input class="submit-input-button" type="submit">
+        </form>
+    </div>
+    <div style="height: 1234324px;"><h1>balls</h1></div>
+    <!-- <button id="login-button">Login</button>
     <button id="logout-button">Logout</button>
     <div class="user-sign-in">
         <form class="grid sign-up-form">
@@ -24,7 +55,7 @@
             </div>
             <input type="submit">
         </form>
-    </div>    
+    </div>     -->
     <!-- <footer>this is a footer</footer> -->
     <script src="assets/javascript/main.js"></script>
 </body>
