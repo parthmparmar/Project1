@@ -18,7 +18,9 @@ const auth = firebase.auth();
 let userCredentialsModal = document.getElementById("user-credentials-modal");
 
 // grabbing onto all links to bring up modal
-let userCredentialLinks = document.querySelectorAll(".page-link");
+let userCredentialLinks = document.querySelectorAll(".credential-input-link");
+
+let logOutLink = document.getElementById("user-logout");
 
 var modalTitle;
 
@@ -37,51 +39,37 @@ let userCredentialsForm = document.getElementById("user-credentials-form");
 
 userCredentialsForm.addEventListener("submit", function(event) {
     event.preventDefault();
+    
+    if(modalTitle === null) return;
 
     // grabbing user info
-    const email = signUpForm["user-email-input"].value;
-    const password = signUpForm["user-password-input"].value;
+    const email = userCredentialsForm["user-email-input"].value;
+    const password = userCredentialsForm["user-password-input"].value;
 
     switch(modalTitle.textContent) {
         case "Sign Up":
-            console.log("it was sign up");
             // signing up the user (literally all you have to do... it's sick!)
             auth.createUserWithEmailAndPassword(email, password).then(function(credential) {
                 console.log(credential.user);
             });
-
+            userCredentialsModal.style.display = "none";
             break;
         case "Login":
-            console.log("it was login");
             auth.signInWithEmailAndPassword(email, password).then(credential => {
                 console.log(credential.user);
             });
-            break;
-        case "Logout":
-            console.log("it was logout");
-            auth.signOut().then(function() {
-                console.log("the user has logged out, and we should hide content");
-            });
+            userCredentialsModal.style.display = "none";
             break;
         default:
             break;
     }
 });
 
+logOutLink.addEventListener("click", function(event) {
+    event.preventDefault();
 
-// // grabbing onto login button
-// const loginButton = document.getElementById("login-button");
+    auth.signOut().then(function() {
+        console.log("the user has logged out, and we should hide content");
+    });
+});
 
-// signUpForm.addEventListener("submit", function(event) {
-//     event.preventDefault();
-//     console.log("we got in here");
-
-
-//     // getting user credentials
-//     const email = signUpForm["user-email-input"].value;
-//     const password = signUpForm["user-password-input"].value;
-
-//     auth.signInWithEmailAndPassword(email, password).then(credential => {
-//         console.log(credential.user);
-//     });
-// })
