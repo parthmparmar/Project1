@@ -9,12 +9,12 @@ var resultsArray = [];
 tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
 
 function tasteDive(value, type, key, limit) {
-    queryURL = "https://cors-anywhere.herokuapp.com/"+"https://tastedive.com/api/similar?q=" + value + "&type=" + type + "&k=" + key + "&limit=" + limit;
+    queryURL = "https://cors-anywhere.herokuapp.com/" + "https://tastedive.com/api/similar?q=" + value + "&type=" + type + "&k=" + key + "&limit=" + limit;
     $.ajax({
         url: queryURL,
         method: "GET"
-    }).then(function(results){
-        results.Similar.Results.forEach(function(item) {
+    }).then(function (results) {
+        results.Similar.Results.forEach(function (item) {
             resultsArray.push(item.Name);
         });
         console.log(resultsArray);
@@ -23,41 +23,41 @@ function tasteDive(value, type, key, limit) {
 
 }
 
-// var tasteDiveArray = ["lizzo", "beyonce", "celine dion", "shania twain", "cher", "billy joel"];
 
 console.log(resultsArray);
-// /v1/artists/{id}
-function callItunesAPI(){
-    for(var i=0; i<resultsArray.length; i++){
+function callItunesAPI() {
+    for (var i = 0; i < resultsArray.length; i++) {
         var artistNameFromArray = resultsArray[i]
         console.log(artistNameFromArray);
-        var queryURL ="https://cors-anywhere.herokuapp.com/"+ "https://itunes.apple.com/search?term=" + artistNameFromArray + "&limit=1";  
-   
-$.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    .then(function(response) {
-    //   console.log(typeof response);
-             var result = JSON.parse(response).results;
-        console.log(result);
-        // console.log(response[0])
-        // console.log(result[0].artworkUrl100);
-        // console.log(result[0].artistName);
-        // console.log(result[0].primaryGenreName);
-        // console.log(result[0].trackName);      
-        // console.log(result[0].previewUrl);
-        var finalArtistName = $("<div>");
-       finalArtistName.attr("class", "artist-name");
-       finalArtistName.text(JSON.stringify(result[0].artistName));
-   
-        console.log(finalArtistName +"should be artistname");
-        var artistImage = $("<img>");
-        artistImage.attr("src", result[0].artworkUrl100);
-        artistImage.attr("alt", "artist");
-        $(".main-search-result-continer").append(artistImage, finalArtistName);
-        
-    });
+        var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + artistNameFromArray + "&limit=1";
 
-}}
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                var result = JSON.parse(response).results;
+                console.log(result);
+                var finalArtistName = $("<div>");
+                finalArtistName.attr("class", "artist-name");
+                finalArtistName.text(JSON.stringify(result[0].artistName));
+                var artistImage = $("<img>");
+                artistImage.attr({
+                    "class": "imageClick",
+                    "src": result[0].artworkUrl100,
+                });
+                artistImage.attr("play", result[0].previewUrl)
+                $(".imageClick").on("click", function () {
+                    var playAudio = $(this).attr("play");
+                    var audio = new Audio(playAudio);
+                    audio.play();
+
+                });
+                $(".main-search-result-continer").append(artistImage, finalArtistName);
+
+
+            });
+
+    }
+}
 // callItunesAPI();
