@@ -100,3 +100,8 @@ form {
     border-radius: 6px;
     margin-top: 15px;
 }
+
+#user-credentials-input-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}

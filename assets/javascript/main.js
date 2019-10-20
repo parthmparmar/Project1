@@ -18,46 +18,56 @@ const auth = firebase.auth();
 let userCredentialsModal = document.getElementById("user-credentials-modal");
 
 // grabbing onto all links to bring up modal
-let userCredentialLinks = document.querySelectorAll(".page-link")
+let userCredentialLinks = document.querySelectorAll(".page-link");
+
+var modalTitle;
 
 userCredentialLinks.forEach(function(link) {
     link.addEventListener("click", function(event) {
         event.preventDefault();
     
         userCredentialsModal.style.display = "block";
-        var modalTitle = document.getElementById("user-credential-input-title");
+        modalTitle = document.getElementById("user-credentials-input-title");
         modalTitle.textContent = link.textContent;
     });    
 });
 
 // starting sign up information
-// const signUpForm = document.querySelector(".sign-up-form");
+let userCredentialsForm = document.getElementById("user-credentials-form");
 
-// // adding an event listener on submission of the form
-// signUpForm.addEventListener("submit", function(event) {
-//     event.preventDefault();
+userCredentialsForm.addEventListener("submit", function(event) {
+    event.preventDefault();
 
-//     // grabbing user info
-//     const email = signUpForm["user-email-input"].value;
-//     const password = signUpForm["user-password-input"].value;
+    // grabbing user info
+    const email = signUpForm["user-email-input"].value;
+    const password = signUpForm["user-password-input"].value;
 
-//     // signing up the user (literally all you have to do... it's sick!)
-//     auth.createUserWithEmailAndPassword(email, password).then(function(credential) {
-//         console.log(credential.user);
-//     });
-// });
+    switch(modalTitle.textContent) {
+        case "Sign Up":
+            console.log("it was sign up");
+            // signing up the user (literally all you have to do... it's sick!)
+            auth.createUserWithEmailAndPassword(email, password).then(function(credential) {
+                console.log(credential.user);
+            });
 
-// // grabbing onto logout button
-// const logoutButton = document.getElementById("logout-button");
+            break;
+        case "Login":
+            console.log("it was login");
+            auth.signInWithEmailAndPassword(email, password).then(credential => {
+                console.log(credential.user);
+            });
+            break;
+        case "Logout":
+            console.log("it was logout");
+            auth.signOut().then(function() {
+                console.log("the user has logged out, and we should hide content");
+            });
+            break;
+        default:
+            break;
+    }
+});
 
-// // logging user out of application
-// logoutButton.addEventListener("click", function(event) {
-//     event.preventDefault();
-
-//     auth.signOut().then(function() {
-//         console.log("the user has logged out, and we should hide content");
-//     });
-// });
 
 // // grabbing onto login button
 // const loginButton = document.getElementById("login-button");
