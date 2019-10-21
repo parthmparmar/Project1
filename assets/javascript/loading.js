@@ -1,4 +1,4 @@
-setTimeout(loadingGIF, 1000);
+setInterval(loadingGIF, 1000);
 function loadingGIF(){
     var loadingImage = $("<img>");
     loadingImage.attr("src", "assets/images/loadng.gif");
