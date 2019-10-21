@@ -1,13 +1,24 @@
+var playAudio;
+
+var searchType = "music";
+// key for tasteDiveKey
+var tasteDiveKey = "348203-ClassPro-YG3CBL5R";
+// search limit for the aip to result 
+var searchLimit = 9;
+var resultsArray = [];
+
 $(document).ready(function () {
+
+
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
 
-        setInterval(loadingGIF, 3000);
-        function loadingGIF() {
-            var loadingImage = $("<img>");
-            loadingImage.attr("src", "assets/loading.gif");
-            $(".main-search-result-continer").append(loadingImage);
-        }
+        // setInterval(loadingGIF, 3000);
+        // function loadingGIF() {
+        //     var loadingImage = $("<img>");
+        //     loadingImage.attr("src", "assets/loading.gif");
+        //     $(".main-search-result-continer").append(loadingImage);
+        // }
 
 
 
@@ -16,12 +27,6 @@ $(document).ready(function () {
 
         var searchValue = $("#userSearch").val().trim();
         console.log(searchValue);
-        var searchType = "music";
-        // key for tasteDiveKey
-        var tasteDiveKey = "348203-ClassPro-YG3CBL5R";
-        // search limit for the aip to result 
-        var searchLimit = 9;
-        var resultsArray = [];
 
         tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
 
@@ -51,29 +56,33 @@ $(document).ready(function () {
                 })
                     .then(function (response) {
                         var result = JSON.parse(response).results;
+                        console.log(response);
                         var finalArtistName = $("<div>");
                         finalArtistName.attr("class", "artist-name");
-                        finalArtistName.text(JSON.stringify(result[0].artistName));
+                        finalArtistName.text(result[0].artistName);
                         var trackName = $("<p>");
-                        trackName.text(JSON.stringify(result[0].trackName));
+                        trackName.text(result[0].trackName);
+                        var artistGenre = $("<p>");
+                        artistGenre.text(result[0].primaryGenreName);
                         var artistImage = $("<img>");
                         artistImage.attr({
                             "class": "imageClick",
                             "src": result[0].artworkUrl100,
                         });
-                        artistImage.attr("play", result[0].previewUrl)
-                        $(".imageClick").on("click", function () {
-                            var playAudio = $(this).attr("play");
-                            var audio = new Audio(playAudio);
-                            audio.play();
-
-                        });
-
-                        $(".main-search-result-continer").append(artistImage, finalArtistName, trackName);
-
+                        artistImage.attr("play", result[0].previewUrl);
+                        $(".main-search-result-continer").append(artistImage, finalArtistName, trackName, artistGenre);
                     });
-
+            
             }
         }
     });
+    $(document).on("click", ".imageClick", function () {
+        playAudio = $(this).attr("play");
+        console.log(playAudio);
+        var audio = new Audio(playAudio);
+
+        audio.play();
+
+    });
+
 });
