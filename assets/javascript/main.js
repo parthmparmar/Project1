@@ -8,6 +8,8 @@ var firebaseConfig = {
     appId: "1:50439559418:web:6964fe4a8294811cf09143"
 };
 
+var user;
+
 firebase.initializeApp(firebaseConfig);
 
 // making database and auth connection 
@@ -39,8 +41,10 @@ let userCredentialsForm = document.getElementById("user-credentials-form");
 
 userCredentialsForm.addEventListener("submit", function(event) {
     event.preventDefault();
-    
-    if(modalTitle === null) return;
+
+    if(modalTitle === null) {
+        return;
+    }
 
     // grabbing user info
     const email = userCredentialsForm["user-email-input"].value;
@@ -51,6 +55,7 @@ userCredentialsForm.addEventListener("submit", function(event) {
             // signing up the user (literally all you have to do... it's sick!)
             auth.createUserWithEmailAndPassword(email, password).then(function(credential) {
                 console.log(credential.user);
+                user = credential.user;
             });
             userCredentialsModal.style.display = "none";
             break;
@@ -59,8 +64,16 @@ userCredentialsForm.addEventListener("submit", function(event) {
                 console.log(credential.user);
             });
             userCredentialsModal.style.display = "none";
+            var title = document.getElementById("user-login");
+            title.textContent = "Logout";
             break;
         default:
+            auth.signOut().then(function() {
+                console.log("the user has logged out, and we should hide content");
+            });
+
+            var title = document.getElementById("user-login");
+            title.textContent = "Logout";
             break;
     }
 });
@@ -68,8 +81,6 @@ userCredentialsForm.addEventListener("submit", function(event) {
 logOutLink.addEventListener("click", function(event) {
     event.preventDefault();
 
-    auth.signOut().then(function() {
-        console.log("the user has logged out, and we should hide content");
-    });
+    
 });
 

@@ -61,9 +61,6 @@
 
 #user-credentials-modal {
     margin: 20%;
-    padding: 30px;
-    border-radius: 8px;
-    border: 1px solid #DADCE0;
     margin-top: 7%;
     z-index: 1;
     overflow: auto;
@@ -73,6 +70,48 @@
 
 form {
     padding: 30px;
+}
+
+.user-input-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .user-input-label {
+    margin-bottom: 10px;
+} */
+
+/* .user-input {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 12.5px;
+    width: 90%;
+}
+
+.submit-input-button {
+    padding: 7.5px;
+    border: 1px solid white;
+    color: white;
+    background-color: yellow;
+    margin-top: 15px;
+}
+
+#user-credentials-input-title {
+    font-size: 24px;
+    margin-bottom: 50px;
+} */
+
+
+#user-credentials-modal {
+    margin: 20%;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #DADCE0;
+    margin-top: 7%;
+    z-index: 1;
+    overflow: auto;
+    position: fixed;
+    display: none;
 }
 
 .user-input-container {
