@@ -72,7 +72,7 @@ $(document).ready(function () {
                         artistImage.attr("play", result[0].previewUrl);
                         $(".main-search-result-continer").append(artistImage, finalArtistName, trackName, artistGenre);
                     });
-            }
+            
         }
     });
     $(document).on("click", ".imageClick", function () {
