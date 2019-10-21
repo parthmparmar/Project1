@@ -1,6 +1,16 @@
 $(document).ready(function () {
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
+
+        setInterval(loadingGIF, 3000);
+        function loadingGIF() {
+            var loadingImage = $("<img>");
+            loadingImage.attr("src", "assets/loading.gif");
+            $(".main-search-result-continer").append(loadingImage);
+        }
+
+
+
         $(".main-search-result-continer").empty();
 
 
@@ -41,24 +51,24 @@ $(document).ready(function () {
                 })
                     .then(function (response) {
                         var result = JSON.parse(response).results;
-                        // console.log(result);
-                        // console.log(response[0])
-                        // console.log(result[0].artworkUrl100);
-                        // console.log(result[0].artistName);
-                        // console.log(result[0].primaryGenreName);
-                        // console.log(result[0].trackName);      
-                        // console.log(result[0].previewUrl);
                         var finalArtistName = $("<div>");
                         finalArtistName.attr("class", "artist-name");
                         finalArtistName.text(JSON.stringify(result[0].artistName));
                         var trackName = $("<p>");
                         trackName.text(JSON.stringify(result[0].trackName));
                         var artistImage = $("<img>");
-                        artistImage.attr("src", result[0].artworkUrl100);
-                        artistImage.attr("alt", "artist");
-                        // var playTrack = $("<audio>").attr("src", result[0].previewUrl);
-                        // // playTrack.attr("src", result[0].previewUrl);
-                        // playTrack.play();
+                        artistImage.attr({
+                            "class": "imageClick",
+                            "src": result[0].artworkUrl100,
+                        });
+                        artistImage.attr("play", result[0].previewUrl)
+                        $(".imageClick").on("click", function () {
+                            var playAudio = $(this).attr("play");
+                            var audio = new Audio(playAudio);
+                            audio.play();
+
+                        });
+
                         $(".main-search-result-continer").append(artistImage, finalArtistName, trackName);
 
                     });
