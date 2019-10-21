@@ -22,3 +22,16 @@
     grid-column: 4/14;
     display: grid;
 }
+.main-search-result-continer {
+    margin-top: 80px;
+}
+.custom-card {
+    width: 200px;
+    margin: 10px;
+}
+.card-content {
+    padding-bottom: 20px;
+}
+h1 {
+    color: brown;
+}
