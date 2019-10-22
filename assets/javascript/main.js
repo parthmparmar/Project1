@@ -68,6 +68,7 @@ $(document).ready(function () {
                         artistImage.attr({
                             "class": "imageClick",
                             "src": result[0].artworkUrl100,
+                            "href": "opening.html"
                         });
                         artistImage.attr("play", result[0].previewUrl);
                         $(".main-search-result-continer").append(artistImage, finalArtistName, trackName, artistGenre);
@@ -76,17 +77,20 @@ $(document).ready(function () {
             }
         }
     });
-    $(document).on("click", ".imageClick", function () {
-        playAudio = $(this).attr("play");
-        console.log(playAudio);
-        var audio = new Audio(playAudio);
-        audio.play();
-
-    });
-    $('a').on('click', function (e) {    
+    $(document).on("click", ".imageClick", function (e) {
+        // playAudio = $(this).attr("play");
+        // console.log(playAudio);
+        // var audio = new Audio(playAudio);
+        // audio.play();
         var f = $('.new-tab-opener');
         f.attr('action', $(this).attr('data-href'));
         f.submit();
+
     });
+    // $('a').on('click', function (e) {    
+    //     var f = $('.new-tab-opener');
+    //     f.attr('action', $(this).attr('data-href'));
+    //     f.submit();
+    // });
 
 });
