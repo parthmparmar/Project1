@@ -80,9 +80,13 @@ $(document).ready(function () {
         playAudio = $(this).attr("play");
         console.log(playAudio);
         var audio = new Audio(playAudio);
-
         audio.play();
 
+    });
+    $('a').on('click', function (e) {    
+        var f = $('.new-tab-opener');
+        f.attr('action', $(this).attr('data-href'));
+        f.submit();
     });
 
 });
