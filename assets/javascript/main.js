@@ -68,7 +68,7 @@ $(document).ready(function () {
                         artistImage.attr({
                             "class": "imageClick",
                             "src": result[0].artworkUrl100,
-                            "href": "opening.html"
+                            "data-href": "opening.html"
                         });
                         artistImage.attr("play", result[0].previewUrl);
                         $(".main-search-result-continer").append(artistImage, finalArtistName, trackName, artistGenre);
