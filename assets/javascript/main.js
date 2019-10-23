@@ -1,7 +1,7 @@
 var playAudio;
 var audio;
-var artist_obj =[];
-var id_count = 0;
+var artist_obj = [];
+var id_count = -1;
 var playing_id;
 var error;
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
 
-        $(".main-search-result-continer").empty();
+        // $(".main-search-result-continer").empty();
         id_count = 0;
 
 
@@ -36,20 +36,21 @@ $(document).ready(function () {
                     resultsArray.push(item.Name);
                 });
 
-                if (resultsArray.length == 0){
+                if (resultsArray.length == 0) {
                     error = true;
                     console.log("error");
                     var error = $("<p>");
                     error.text("no results! try again");
                     $(".main-search-result-continer").append(error);
                 }
-                else{
-                callItunesAPI();
+                else {
+                    callItunesAPI();
                 };
             });
 
         }
         function callItunesAPI() {
+            var artist
             for (var i = 0; i < resultsArray.length; i++) {
                 var artistNameFromArray = resultsArray[i]
                 var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + artistNameFromArray + "&limit=1";
@@ -59,7 +60,7 @@ $(document).ready(function () {
                 })
                     .then(function (response) {
                         var result = JSON.parse(response).results;
-                        var artist = {
+                        artist = {
                             name: result[0].artistName,
                             genre: result[0].primaryGenreName,
                             imageURL: result[0].artworkUrl100,
@@ -67,33 +68,30 @@ $(document).ready(function () {
                             songURL: result[0].previewUrl
                         };
                         artist_obj.push(artist);
-                        var finalArtistName = $("<div>");
-                        finalArtistName.attr("class", "artist-name");
-                        finalArtistName.text(artist.name);
-                        var trackName = $("<p>");
-                        trackName.text(artist.songName);
-                        var artistGenre = $("<p>");
-                        artistGenre.text(artist.genre);
-                        var artistImage = $("<img>");
-                        artistImage.attr({
-                            "class": "imageClick",
-                            "src": artist.imageURL,
-                        });
-                        artistImage.attr("play", artist.songURL);
-                        artistImage.attr("data-audio-status","paused");
                         id_count++;
-                        artistImage.attr("id", id_count);
-                        $(".main-search-result-continer").append(artistImage, finalArtistName, trackName, artistGenre);
+                        cardDisplay(id_count, artist);
                     });
-            
             };
         }
     });
 
+
+    function cardDisplay(item, object_artist) {
+        // create cards
+        var masterCard = $("#card");
+        var newCard = masterCard.clone(true);
+        newCard.attr("id", "card" + (item));
+        newCard.removeClass("off");
+        newCard.find(".artist-image").attr("src",object_artist.imageURL);
+        newCard.find(".artist-name").text(object_artist.name);
+        newCard.find(".genre").text(object_artist.genre);
+        newCard.find(".song").text(object_artist.songName);
+        $("#" + (item)).append(newCard);
+    };
     $(document).on("click", ".imageClick", function () {
 
-        if($(this).parent().attr("data-audio-status")!="playing"){
-            if($(this).attr("data-audio-status")!="playing"){
+        if ($(this).parent().attr("data-audio-status") != "playing") {
+            if ($(this).attr("data-audio-status") != "playing") {
                 playAudio = $(this).attr("play");
                 audio = new Audio(playAudio);
                 audio.play();
@@ -103,15 +101,15 @@ $(document).ready(function () {
             }
         }
 
-        else if ($(this).parent().attr("data-audio-status")=="playing"){
-            if($(this).attr("data-audio-status")=="playing"){
+        else if ($(this).parent().attr("data-audio-status") == "playing") {
+            if ($(this).attr("data-audio-status") == "playing") {
                 audio.pause();
                 $(this).attr("data-audio-status", "paused");
                 $(this).parent().attr("data-audio-status", "paused");
             }
-            else if($(this).attr("data-audio-status")!="playing"){
+            else if ($(this).attr("data-audio-status") != "playing") {
                 audio.pause();
-                $("#"+playing_id).attr("data-audio-status", "paused");
+                $("#" + playing_id).attr("data-audio-status", "paused");
                 playAudio = $(this).attr("play");
                 audio = new Audio(playAudio);
                 audio.play();

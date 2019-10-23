@@ -9,7 +9,8 @@
 
 .grid {
     grid-template-columns: repeat(16, 1fr);
-    grid-template-rows: minmax(75px, auto)
+    grid-template-rows: minmax(75px, auto);
+    text-align: center;
 }
 
 .search-media-input {
@@ -35,3 +36,8 @@
 h1 {
     color: brown;
 }
+
+.off {
+    display: none;
+}
+
