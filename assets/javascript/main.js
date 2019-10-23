@@ -90,8 +90,8 @@ $(document).ready(function () {
         newCard.find(".song").text(object_artist.songName);
         $("#" + (item)).append(newCard);
     };
-    $(document).on("click", ".imageClick", function () {
-
+    // $(document).on("click", ".material-icons", function () {
+    $(".material-icons").on("click", function () {
         if ($(this).parent().attr("data-audio-status") != "playing") {
             if ($(this).attr("data-audio-status") != "playing") {
                 playAudio = $(this).attr("play");
