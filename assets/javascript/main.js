@@ -22,7 +22,9 @@ $(document).ready(function () {
         id_count = 0;
 
 
-        var searchValue = $("#userSearch").val().trim();
+        var searchValue = $("#userSearch").val().trim().toUpperCase();
+        
+        $(".recomendations-result-container").text(searchValue);
 
         tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
 
