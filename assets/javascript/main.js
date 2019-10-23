@@ -8,7 +8,7 @@ var firebaseConfig = {
     appId: "1:50439559418:web:6964fe4a8294811cf09143"
 };
 
-var user;
+var globalUser;
 
 firebase.initializeApp(firebaseConfig);
 
@@ -16,71 +16,112 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
+function changeElementsVisibility(elems, displayType) {
+    elems.forEach(elem => {
+        elem.style.display = displayType;
+    });
+}
+
+function changeElementVisibility(elem, displayType) {
+    elem.style.display = displayType;
+}
+
+function createUser(userId, firstName, lastName, email) {
+    db.collection("Users").doc(userId).set({
+        firstName: firstName,
+        lastName: lastName,
+        email: email
+    });
+}
+
+function getUser(userId) {
+    
+}
+
 // grabbing onto user credentials modal
-let userCredentialsModal = document.getElementById("user-credentials-modal");
+let userLoginModal = document.getElementById("user-login-modal");
+let userSignUpModal = document.getElementById("user-sign-up-modal");
+
+// grabbing onto user credentials forms
+let userSignUpForm = document.getElementById("user-sign-up-form");
+let userLoginForm = document.getElementById("user-login-form");
+
+// grabbing onto sign up, login, and logout links
+var signUpLink = document.querySelector(".sign-up-input-link");
+var loginLink = document.querySelector(".login-input-link");
+var logoutLink = document.querySelector(".logout-input-link");
 
 // grabbing onto all links to bring up modal
 let userCredentialLinks = document.querySelectorAll(".credential-input-link");
 
-let logOutLink = document.getElementById("user-logout");
-
-var modalTitle;
-
-userCredentialLinks.forEach(function(link) {
-    link.addEventListener("click", function(event) {
-        event.preventDefault();
-    
-        userCredentialsModal.style.display = "block";
-        modalTitle = document.getElementById("user-credentials-input-title");
-        modalTitle.textContent = link.textContent;
-    });    
-});
-
-// starting sign up information
-let userCredentialsForm = document.getElementById("user-credentials-form");
-
-userCredentialsForm.addEventListener("submit", function(event) {
+// displaying sign up page when user clicks on sign up link
+signUpLink.addEventListener("click", event => {
     event.preventDefault();
 
-    if(modalTitle === null) {
-        return;
-    }
-
-    // grabbing user info
-    const email = userCredentialsForm["user-email-input"].value;
-    const password = userCredentialsForm["user-password-input"].value;
-
-    switch(modalTitle.textContent) {
-        case "Sign Up":
-            // signing up the user (literally all you have to do... it's sick!)
-            auth.createUserWithEmailAndPassword(email, password).then(function(credential) {
-                console.log(credential.user);
-                user = credential.user;
-            });
-            userCredentialsModal.style.display = "none";
-            break;
-        case "Login":
-            auth.signInWithEmailAndPassword(email, password).then(credential => {
-                console.log(credential.user);
-            });
-            userCredentialsModal.style.display = "none";
-            var title = document.getElementById("user-login");
-            title.textContent = "Logout";
-            break;
-        default:
-            auth.signOut().then(function() {
-                console.log("the user has logged out, and we should hide content");
-            });
-
-            var title = document.getElementById("user-login");
-            title.textContent = "Logout";
-            break;
-    }
+    userSignUpModal.style.display = "block";
 });
 
-logOutLink.addEventListener("click", function(event) {
+// displaying login page when user clicks on login link
+loginLink.addEventListener("click", event => {
     event.preventDefault();
 
-    
+    userLoginModal.style.display = "block";
 });
 
+// grabbing onto user credentials, creating a User object, adding credential to
+// the database, and logging user into the application
+userSignUpForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const firstName = userSignUpForm["user-first-name-input"].value;
+    const lastName = userSignUpForm["user-last-name-input"].value;
+    const email = userSignUpForm["user-email-input"].value;
+    const password = userSignUpForm["user-password-input"].value;
+    
+    auth.createUserWithEmailAndPassword(email, password).then(credential => {
+        user = credential.user;
+        createUser(credential.user.uid, firstName, lastName, email);
+
+        userSignUpForm.reset();
+
+        changeElementsVisibility([userSignUpModal, signUpLink, loginLink], "none");
+        changeElementVisibility (logoutLink, "block");
+    }).catch(error => {
+        console.log({error});
+        console.log(error.message);
+    })
+});
+
+// checking user login and password against those in firebase auth
+userLoginForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const email = userLoginForm["user-email-input"].value;
+    const password = userLoginForm["user-password-input"].value;
+
+    auth.signInWithEmailAndPassword(email, password).then(credential => {
+
+        userLoginForm.reset();
+        changeElementsVisibility([userLoginModal, signUpLink, loginLink], "none");
+        changeElementVisibility(logoutLink, "block");
+    }).catch(error => {
+        console.log(error.message);
+    })
+});
+
+loginLink.addEventListener("click", event => {
+    event.preventDefault();
+
+    auth.signOut();
+});
+
+auth.onAuthStateChanged(user => {
+    // do shit based on if the user is null or not
+    if(user) {
+        console.log("the user is signed in");
+        globalUser = user;
+    } else {
+        console.log("user logged out");
+        console.log({user});
+    }
+});

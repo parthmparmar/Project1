@@ -15,20 +15,43 @@
         <div id="nav-bar-seperator"></div>
         <ul class="nav-bar-link-container">
             <div class="page-link-container">
-                <a href="" class="page-link credential-input-link">Sign Up</a>
+                <a href="" class="page-link sign-up-input-link">Sign Up</a>
             </div>
             <div class="page-link-container">
-                <a href="" id="user-login" class="page-link credential-input-link">Login</a>
+                <a href="" id="user-login" class="page-link login-input-link">Login</a>
             </div>
             <div class="page-link-container">
-                <a href="" id="user-logout" class="page-link">Logout</a>
+                <a href="" id="user-login" class="page-link logout-input-link">Logout</a>
             </div>
         </ul>
     </nav>
     <!--SIGN UP MODAL-->
-    <div id="user-credentials-modal">
-        <form id="user-credentials-form">
-            <h3 id="user-credentials-input-title"></h2>
+    <div id="user-sign-up-modal">
+        <form class="user-credentials-form" id="user-sign-up-form">
+            <h3 id="user-credentials-input-title">Sign Up</h3>
+            <div class="user-first-name-input-container user-input-container">
+                <label class="user-input-label" for="user-first-name-input">First Name</label>
+                <input id="user-first-name-input" class="user-input" type="text" placeholder="First Name">
+            </div>
+            <div class="user-last-name-input-container user-input-container">
+                <label class="user-input-label" for="user-last-name-input">Last Name</label>
+                <input id="user-last-name-input" class="user-input" type="text" placeholder="Last Name">
+            </div>   
+            <div class="user-email-input-container user-input-container">
+                <label class="user-input-label" for="user-email-input">Email</label>
+                <input id="user-email-input" class="user-input" type="text" placeholder="Email">
+            </div>
+            <div class="user-password-container user-input-container">
+                <label class="user-input-label" for="user-password-input">Password</label>
+                <input id="user-password-input" class="user-input" type="text" placeholder="security123">
+            </div>
+            <input class="submit-input-button" type="submit">
+        </form>
+    </div>
+    <!--LOGIN MODAL-->
+    <div id="user-login-modal">
+        <form class="user-credentials-form" id="user-login-form">
+            <h3 id="user-credentials-input-title">Login</h3>
             <div class="user-email-input-container user-input-container">
                 <label class="user-input-label" for="user-email-input">Email</label>
                 <input id="user-email-input" class="user-input" type="text" placeholder="Email">
@@ -41,21 +64,6 @@
         </form>
     </div>
     <div style="height: 1234324px;"><h1>balls</h1></div>
-    <!-- <button id="login-button">Login</button>
-    <button id="logout-button">Logout</button>
-    <div class="user-sign-in">
-        <form class="grid sign-up-form">
-            <div class="user-email-input-container">
-                <label for="user-email-input">Email</label>
-                <input id="user-email-input" type="text" placeholder="Email">
-            </div>
-            <div class="user-password-container">
-                <label for="user-password-input">Password</label>
-                <input id="user-password-input" type="text" placeholder="security123">
-            </div>
-            <input type="submit">
-        </form>
-    </div>     -->
     <!-- <footer>this is a footer</footer> -->
     <script src="assets/javascript/main.js"></script>
 </body>

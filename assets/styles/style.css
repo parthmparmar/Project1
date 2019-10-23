@@ -31,7 +31,7 @@
 }
 
 #nav-bar-seperator {
-    width: 70%;
+    width: 80%;
 }
 
 .nav-bar-link-container {
@@ -59,8 +59,15 @@
     color: #333;
 }
 
-#user-credentials-modal {
+.logout-input-link {
+    display: none;
+}
+
+#user-login-modal {
     margin: 20%;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #DADCE0;
     margin-top: 7%;
     z-index: 1;
     overflow: auto;
@@ -68,7 +75,19 @@
     display: none;
 }
 
-form {
+#user-sign-up-modal {
+    margin: 20%;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #DADCE0;
+    margin-top: 7%;
+    z-index: 1;
+    overflow: auto;
+    position: fixed;
+    display: none;
+}
+
+/*form {
     padding: 30px;
 }
 
@@ -76,7 +95,7 @@ form {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-}
+} */
 
 /* .user-input-label {
     margin-bottom: 10px;
@@ -102,7 +121,7 @@ form {
 } */
 
 
-#user-credentials-modal {
+.user-credentials-modal {
     margin: 20%;
     padding: 30px;
     border-radius: 8px;
