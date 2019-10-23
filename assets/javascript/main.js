@@ -34,8 +34,21 @@ function createUser(userId, firstName, lastName, email) {
     });
 }
 
-function getUser(userId) {
-    
+function getUserRef(userId) {
+    var userRef = db.collection("Users").doc(userId).get();
+
+    return userRef;
+}
+
+function createArtist(genre, imageURL, name, songName, songURL) {
+    console.log("we're in the function");
+    db.collection("Artists").doc(name).set({
+        genre: "genre",
+        imageURL: "imageURL", 
+        name: "name", 
+        songName: "songName",
+        songURL: "songURL"
+    });
 }
 
 // grabbing onto user credentials modal
@@ -118,10 +131,25 @@ loginLink.addEventListener("click", event => {
 auth.onAuthStateChanged(user => {
     // do shit based on if the user is null or not
     if(user) {
-        console.log("the user is signed in");
-        globalUser = user;
+        var userData;
+
+        getUserRef(user.uid).then(document => {
+            userData = document.data();
+            console.log(userData);
+
+        });
     } else {
         console.log("user logged out");
         console.log({user});
     }
+});
+
+createArtist("asdfa", "asdf", "asdf", "sdf", "asdf");
+
+// db.collection("Artists").doc("2cWHmSXwzIY0WLRPBOdW").get().then(doc => {
+//     console.log(doc);
+// })
+
+db.collection("Artists").doc("adsfasdf").set({
+    name: "genre",
 });
