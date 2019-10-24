@@ -89,8 +89,9 @@ $(document).ready(function () {
         newCard.removeClass("off");
         newCard.find(".artist-image").attr("src",object_artist.imageURL);
         newCard.find(".artist-name").text(object_artist.name);
-        newCard.find(".genre").text(object_artist.genre);
-        newCard.find(".song").text(object_artist.songName);
+        newCard.find(".genre").text("Genre: " +object_artist.genre);
+        newCard.find(".song").text("Track Name: " +object_artist.songName);
+        newCard.find(".imageClick").attr("src", object_artist.songURL);
         $("#" + (item)).append(newCard);
     };
     $(document).on("click", ".imageClick", function () {
@@ -100,7 +101,7 @@ $(document).ready(function () {
             console.log("playing");
             if ($(this).attr("data-audio-status") != "playing") {
                 console.log("playing2");
-                playAudio = $(this).attr("play");
+                playAudio = $(this).attr("src");
                 audio = new Audio(playAudio);
                 audio.play();
                 $(this).attr("data-audio-status", "playing");
