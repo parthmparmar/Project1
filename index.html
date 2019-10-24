@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <title>Quintessential Curations</title>
@@ -25,7 +25,7 @@
         </header>
         <div class="grid">
             <form class="search-media">
-                <h5>Search for your favorite Artist</h5><input type="search-media-input" placeholder="Billy Joel" id= "userSearch" autocomplete="off"></input>
+                <h5>Search for your favorite Artist</h5><input type="search-media-input" placeholder="Billy Joel" id= "userSearch" autocomplete="off" size="30"></input>
                 <button class="btn waves-effect waves-light red darken-3" type="submit" name="action" id="userArtistInput">Search<i class="material-icons right">send</i>
                 </button>
             </form>          
@@ -50,7 +50,8 @@
                             <p class ="song">Song</p>
                         </div>
                         <div class="card-action">
-                                <span class="card-title artist-name"style="font-weight: 400; color: #8f3333">Artist Name</span>
+                            <!-- added model trigger here - class="modal-trigger" -->
+                                <a href="#modal1" class="modal-trigger"><span class="card-title artist-name" style="font-weight: 400; color: #8f3333; text-transform: none;" >Artist Name</span></a>
                             <!-- <a class = "song-click" href="https://audio-ssl.itunes.apple.com/itunes-assets/Music/v4/a5/fd/be/a5fdbecc-2df9-3925-b4a0-784c423bbcee/mzaf_6527837479129833721.plus.aac.p.m4a"><i class="small material-icons">play_circle_filled</i> Play Music</a> -->
                         </div>
                     </div>
@@ -85,12 +86,53 @@
             </div>
         </div>
     </div>
+      <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+        <div class="modal-content" >
+          <h4>Artist Name</h4>
+                    <img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;">
+                    <table>
+                            <thead>
+                              <tr>
+                                  <th>Heading One</th>
+                                  <th>Heading Two</th>
+                                  <th>Heading Three</th>
+                              </tr>
+                            </thead>
+                    
+                            <tbody>
+                              <tr>
+                                <td>Firebase Data or more tracks?</td>
+                                <td>Firebase Data</td>
+                                <td>Firebase Data</td>
+                              </tr>
+                              <tr>
+                                <td>Firebase Data</td>
+                                <td>Firebase Data</td>
+                                <td>Firebase Data</td>
+                              </tr>
+                              <tr>
+                                <td>Firebase Data</td>
+                                <td>Firebase Data</td>
+                                <td>Firebase Data</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                  </div>
+    
+        
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
         <footer></footer>
     </div>
+   
     <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="assets/javascript/main.js"></script>
 </body>
 
