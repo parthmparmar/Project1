@@ -4,6 +4,7 @@ var artist_obj = [];
 var id_count = -1;
 var playing_id;
 var error;
+var songPlaying = false;
 
 var searchType = "music";
 // key for tasteDiveKey
@@ -95,35 +96,35 @@ $(document).ready(function () {
         $("#" + (item)).append(newCard);
     };
     $(document).on("click", ".imageClick", function () {
-        console.log("button clicked");
-
-        if ($(this).parent().attr("data-audio-status") != "playing") {
-            console.log("playing");
+        console.log(songPlaying);
+        console.log($(this).attr("data-audio-status"));
+        console.log(playing_id)
+        
+        if (songPlaying == false) {
             if ($(this).attr("data-audio-status") != "playing") {
-                console.log("playing2");
                 playAudio = $(this).attr("src");
                 audio = new Audio(playAudio);
                 audio.play();
                 $(this).attr("data-audio-status", "playing");
-                $(this).parent().attr("data-audio-status", "playing");
-                playing_id = $(this).parent().attr("id");
+                songPlaying = true;
+                playing_id = $(this).closest(".col").attr("id");
             }
         }
 
-        else if ($(this).parent().attr("data-audio-status") == "playing") {
-            console.log("stopped");
+        else if (songPlaying == true) {
             if ($(this).attr("data-audio-status") == "playing") {
                 audio.pause();
                 $(this).attr("data-audio-status", "paused");
-                $(this).parent().attr("data-audio-status", "paused");
+                songPlaying = false;
             }
             else if ($(this).attr("data-audio-status") != "playing") {
                 audio.pause();
-                $("#" + playing_id).attr("data-audio-status", "paused");
-                playAudio = $(this).attr("play");
+                $("#" + playing_id).find(".imageClick").attr("data-audio-status", "paused");
+                playAudio = $(this).attr("src");
                 audio = new Audio(playAudio);
                 audio.play();
                 $(this).attr("data-audio-status", "playing");
+                playing_id = $(this).closest(".col").attr("id");
             }
         }
     });
