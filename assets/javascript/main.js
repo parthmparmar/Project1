@@ -1,11 +1,11 @@
 var firebaseConfig = {
-    apiKey: "AIzaSyAzcCVVc9WPtxYSG76BMk87ENV_qBFSO7M",
-    authDomain: "projectone-e2094.firebaseapp.com",
-    databaseURL: "https://projectone-e2094.firebaseio.com",
-    projectId: "projectone-e2094",
-    storageBucket: "projectone-e2094.appspot.com",
-    messagingSenderId: "50439559418",
-    appId: "1:50439559418:web:6964fe4a8294811cf09143"
+    apiKey: "AIzaSyBHK6xmt8nJjEx-1ALGRF73NdXyn0AI8Gc",
+    authDomain: "project1version2.firebaseapp.com",
+    databaseURL: "https://project1version2.firebaseio.com",
+    projectId: "project1version2",
+    storageBucket: "project1version2.appspot.com",
+    messagingSenderId: "885016440307",
+    appId: "1:885016440307:web:d019bee8fba4dc5b62b686"
 };
 
 var globalUser;
@@ -41,13 +41,12 @@ function getUserRef(userId) {
 }
 
 function createArtist(genre, imageURL, name, songName, songURL) {
-    console.log("we're in the function");
-    db.collection("Artists").doc(name).set({
-        genre: "genre",
-        imageURL: "imageURL", 
-        name: "name", 
-        songName: "songName",
-        songURL: "songURL"
+    db.collection("Artists").add({
+        genre: genre,
+        imageURL: imageURL, 
+        name: name, 
+        songName: songName,
+        songURL: songURL
     });
 }
 
@@ -144,12 +143,8 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-createArtist("asdfa", "asdf", "asdf", "sdf", "asdf");
+createArtist("rap", "www.sdfaf.com", "balls", "Nas Is Like", "www.nasislike.com");
 
 // db.collection("Artists").doc("2cWHmSXwzIY0WLRPBOdW").get().then(doc => {
 //     console.log(doc);
 // })
-
-db.collection("Artists").doc("adsfasdf").set({
-    name: "genre",
-});
