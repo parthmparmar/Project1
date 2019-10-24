@@ -42,4 +42,8 @@ h1 {
 .off {
     display: none;
 }
+.errorStyle{
+    font-size: 60px;
+    color: rgb(190, 40, 40);
+}
 

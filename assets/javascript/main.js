@@ -17,6 +17,7 @@ $(document).ready(function () {
 
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
+        
 
         // $(".main-search-result-continer").empty();
         id_count = 0;
@@ -42,15 +43,17 @@ $(document).ready(function () {
                     error = true;
                     console.log("error");
                     var error = $("<p>");
-                    error.text("no results! try again");
+                    error.attr("class", "errorStyle");
+                    error.text("No Results! Try Again!");
                     $(".main-search-result-continer").append(error);
                 }
                 else {
                     callItunesAPI();
                 };
             });
-
+            $("#userSearch").val('');
         }
+        
         function callItunesAPI() {
             var artist
             for (var i = 0; i < resultsArray.length; i++) {
@@ -91,9 +94,12 @@ $(document).ready(function () {
         $("#" + (item)).append(newCard);
     };
     $(document).on("click", ".imageClick", function () {
+        console.log("button clicked");
 
         if ($(this).parent().attr("data-audio-status") != "playing") {
+            console.log("playing");
             if ($(this).attr("data-audio-status") != "playing") {
+                console.log("playing2");
                 playAudio = $(this).attr("play");
                 audio = new Audio(playAudio);
                 audio.play();
@@ -104,6 +110,7 @@ $(document).ready(function () {
         }
 
         else if ($(this).parent().attr("data-audio-status") == "playing") {
+            console.log("stopped");
             if ($(this).attr("data-audio-status") == "playing") {
                 audio.pause();
                 $(this).attr("data-audio-status", "paused");
