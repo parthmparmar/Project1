@@ -13,7 +13,7 @@ var searchLimit = 9;
 var resultsArray = [];
 
 $(document).ready(function () {
-
+    $(".modal").modal();
 
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
