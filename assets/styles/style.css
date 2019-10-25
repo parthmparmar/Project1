@@ -38,7 +38,17 @@
 h1 {
     color: brown;
 }
-
+h4 {
+    color: brown;
+    text-align: left;
+    padding-bottom: 20px;
+}
+.modal-content img {
+    width: 150px;
+}
+.modal-content p {
+    text-align: left;;
+}
 .off {
     display: none;
 }
@@ -52,9 +62,11 @@ h1 {
     padding: 10px;
     vertical-align: middle;
 }
-
 .card-action {
     overflow-y: auto;
     height: 105px;
     vertical-align: middle;
+}
+thead {
+    font-weight: 500;
 }
