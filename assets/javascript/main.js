@@ -18,17 +18,28 @@ $(document).ready(function () {
 
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
-        
 
-        // $(".main-search-result-continer").empty();
-        id_count = 0;
+        if ($("#userSearch").val() == ""){
+            console.log("shake");
+            $("#empty-alert").removeClass("off");
+            $("#userSearch").effect("shake");
+        }
 
-
-        var searchValue = $("#userSearch").val().trim().toUpperCase();
-        
-        $(".recomendations-result-container").text(searchValue);
-
-        tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
+        if ($("#userSearch").val() != ""){
+            $(".errorStyle").empty();
+            $("#empty-alert").addClass("off");
+            $(".main-search-result-continer").find(".col").empty();
+            id_count = 0;
+            resultsArray = [];
+            artist_obj = [];
+    
+    
+            var searchValue = $("#userSearch").val().trim().toUpperCase();
+            
+            $(".recomendations-result-container").text(searchValue);
+    
+            tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
+        };
 
         function tasteDive(value, type, key, limit) {
             queryURL = "https://cors-anywhere.herokuapp.com/" + "https://tastedive.com/api/similar?q=" + value + "&type=" + type + "&k=" + key + "&limit=" + limit;
@@ -45,10 +56,11 @@ $(document).ready(function () {
                     console.log("error");
                     var error = $("<p>");
                     error.attr("class", "errorStyle");
-                    error.text("No Results! Try Again!");
+                    error.text(searchValue + " was not found, please try again.");
                     $(".main-search-result-continer").append(error);
                 }
                 else {
+                    console.log(artist_obj)
                     callItunesAPI();
                 };
             });
@@ -95,6 +107,8 @@ $(document).ready(function () {
         newCard.find(".imageClick").attr("src", object_artist.songURL);
         $("#" + (item)).append(newCard);
     };
+
+    
     $(document).on("click", ".imageClick", function () {
         console.log(songPlaying);
         console.log($(this).attr("data-audio-status"));
