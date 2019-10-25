@@ -49,6 +49,16 @@ h1 {
 #userSearch{
     font-size: 20px;
     border: rgb(190, 40, 40) solid 4pt;
-    padding: 5px;
+    padding: 10px;
+    vertical-align: middle;
+}
+​
+.card-action {
+    overflow: scroll;
+    height: 105px;
+    vertical-align: middle;
 }
 
+.navwrapper{
+    background: rgb(190, 40, 40);
+}
