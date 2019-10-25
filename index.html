@@ -17,14 +17,99 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+
     <title>Quintessential Curations</title>
 </head>
 
 <body>
+    <nav>
+        <div class="nav-wrapper" style="color:#d32f2f;">
+            <a href="#!" class="brand-logo">QC</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
+                <li><a class="login-input-link">Login</a></li>
+                <li><a class="logout-input-link">Logout</a></li>
+                <!-- Dropdown Trigger -->
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <header>
             <h1 style="text-align: center;">Quintessential Curations</h1>
         </header>
+        <div id="user-sign-up-modal" class="modal">
+            <div class="modal-content">
+                <h4 style="margin-bottom: 40px">Sign Up!</h4>
+                
+                <div class="row">
+                    <form class="col s12"id="user-sign-up-form">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="Placeholder" id="user-first-name-input" type="text" class="validate">
+                                <label for="first_name">First Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="user-last-name-input" type="text" class="validate">
+                                <label for="last_name">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="user-email-input" type="email" class="validate">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="user-password-input" type="password" class="validate">
+                                <label for="password">Password</label>
+                            </div>
+                        </div>
+                        <input type="submit" class="modal-close">
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
+        <div id="user-login-modal" class="modal">
+                <div class="modal-content">
+                    <h4 style="margin-bottom: 40px">Login</h4>
+                    
+                    <div class="row">
+                        <form class="col s12"id="user-login-form">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="login-email-input" type="email" class="validate">
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="login-password-input" type="password" class="validate">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <input type="submit" class="modal-close">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </div>
         <div class="grid">
             <form class="search-media">
                 <h5>Search for your favorite Artist</h5>
@@ -57,9 +142,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="main-search-result-continer" data-audio-status = "paused">
+
+<div class="main-search-result-continer" data-audio-status = "paused">
         <!-- First Row-->
         <div class="row" >
             <!-- First Card-->
@@ -75,7 +159,7 @@
             <div  id="4" class="col s3">
             </div>
         </div>
-
+​
         <!-- Second Row-->
         <div class="row">
             <!-- First Card-->
@@ -92,51 +176,53 @@
             </div>
         </div>
     </div>
-      <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-        <div class="modal-content" >
-          <h4>Artist Name</h4>
-                    <img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;">
-                    <table>
-                            <thead>
-                              <tr>
-                                  <th>Heading One</th>
-                                  <th>Heading Two</th>
-                                  <th>Heading Three</th>
-                              </tr>
-                            </thead>
-                    
-                            <tbody>
-                              <tr>
-                                <td>Firebase Data or more tracks?</td>
-                                <td>Firebase Data</td>
-                                <td>Firebase Data</td>
-                              </tr>
-                              <tr>
-                                <td>Firebase Data</td>
-                                <td>Firebase Data</td>
-                                <td>Firebase Data</td>
-                              </tr>
-                              <tr>
-                                <td>Firebase Data</td>
-                                <td>Firebase Data</td>
-                                <td>Firebase Data</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                  </div>
-    
-        
-        <div class="modal-footer">
-          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>Artist Name</h4>
+                <img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg"
+                    alt="Album Image" style="float:left;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Heading One</th>
+                            <th>Heading Two</th>
+                            <th>Heading Three</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Firebase Data or more tracks?</td>
+                            <td>Firebase Data</td>
+                            <td>Firebase Data</td>
+                        </tr>
+                        <tr>
+                            <td>Firebase Data</td>
+                            <td>Firebase Data</td>
+                            <td>Firebase Data</td>
+                        </tr>
+                        <tr>
+                            <td>Firebase Data</td>
+                            <td>Firebase Data</td>
+                            <td>Firebase Data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
         </div>
-    </div>
         <footer></footer>
     </div>
    
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="assets/javascript/main.js"></script>
+    <script src="assets/javascript/auth.js"></script>
 </body>
 
 </html>

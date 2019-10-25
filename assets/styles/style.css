@@ -54,7 +54,7 @@ h1 {
 }
 
 .card-action {
-    overflow: scroll;
+    overflow-y: auto;
     height: 105px;
     vertical-align: middle;
 }

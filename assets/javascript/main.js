@@ -56,7 +56,7 @@ $(document).ready(function () {
                     console.log("error");
                     var error = $("<p>");
                     error.attr("class", "errorStyle");
-                    error.text(searchValue + " was not found, please try again.");
+                    error.text(searchValue + " was not found. Please try again.");
                     $(".main-search-result-continer").append(error);
                 }
                 else {
