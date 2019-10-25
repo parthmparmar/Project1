@@ -35,6 +35,9 @@
 .card-content {
     padding-bottom: 20px;
 }
+.artist-image {
+    max-height: 200px;
+}
 h1 {
     color: brown;
 }
