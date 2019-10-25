@@ -73,3 +73,9 @@ h4 {
 thead {
     font-weight: 500;
 }
+.nav-wrapper{
+    background-color: rgb(190, 40, 40)!important;
+    /* opacity: 0.5; */
+    height: 70px !important;
+
+}
