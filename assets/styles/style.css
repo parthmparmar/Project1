@@ -1,4 +1,10 @@
-* {
+#mainQC {
+    font-family: 'Staatliches', cursive
+}
+
+
+
+*{
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -79,3 +85,9 @@ thead {
     height: 70px !important;
 
 }
+.brand-logo{
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 100px;
+}
+

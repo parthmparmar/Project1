@@ -12,14 +12,17 @@
     <link rel="stylesheet" href="assets/styles/style.css">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     <!-- Compiled and minified JavaScript -->
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  -->
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+   
 
     <title>Quintessential Curations</title>
 </head>
@@ -28,7 +31,7 @@
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">QC</a>
+                <img src="assets/styles/qc.png" class="brand-logo"></img>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
                     <li><a class="login-input-link">Login</a></li>
@@ -42,7 +45,7 @@
     </div>
     <div class="container">
         <header>
-            <h1 style="text-align: center;">Quintessential Curations</h1>
+            <h1 id="mainQC" style="text-align: center;">Quintessential Curations</h1>
         </header>
         <div id="user-sign-up-modal" class="modal">
             <div class="modal-content">
