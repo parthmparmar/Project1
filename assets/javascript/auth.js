@@ -7,6 +7,7 @@ var firebaseConfig = {
     messagingSenderId: "885016440307",
     appId: "1:885016440307:web:d019bee8fba4dc5b62b686"
  };
+
  var globalUser;
  firebase.initializeApp(firebaseConfig);
  // making database and auth connection
@@ -62,7 +63,6 @@ $(document).ready(function () {
         const lastName = $("#user-last-name-input").val();
         const email = $("#user-email-input").val();
         const password = $("#user-password-input").val();
-        var userId;
 
         console.log({firstName, lastName, email, password});
         
@@ -106,6 +106,8 @@ $(document).ready(function () {
     auth.onAuthStateChanged(user => {
         // do shit based on if the user is null or not
         if(user) {
+            globalUser = user.uid;
+            console.log(globalUser);
             var userData;
             getUserRef(user.uid).then(document => {
                 userData = document.data();

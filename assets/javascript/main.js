@@ -5,6 +5,8 @@ var id_count = -1;
 var playing_id;
 var error;
 var songPlaying = false;
+var results;
+
 
 var searchType = "music";
 // key for tasteDiveKey
@@ -12,6 +14,112 @@ var tasteDiveKey = "348203-ClassPro-YG3CBL5R";
 // search limit for the aip to result 
 var searchLimit = 9;
 var resultsArray = [];
+var newRow;
+
+function renderSongDataAttributes(playButton, result) {
+    $(playButton).attr({
+        "data-song-name": result.trackName,
+        "data-song-price": result.trackPrice,
+        "data-song-rating": result.trackExplicitness,
+        "data-song-releaseDate": result.releaseDate,
+        "data-song-url": result.previewUrl,
+        "data-song-track-number": result.trackNumber,
+        "data-song-duration": result.trackTimeMillis,
+        "data-song-id": result.songId,
+        "data-album-id": result.albumId,
+        "data-album-genre": result.primaryGenreName,
+        "data-album-image-url": result.artworkUrl100,
+        "data-album-rating": result.contentAdvisoryRating,
+        "data-album-name": result.collectionName,
+        "data-album-price": result.collectionPrice
+    });
+
+}
+
+function renderSongDisplay(result) {
+    var songDisplayTable = $(".song-display-table");
+    newRow = $(".song-display-row").clone();
+    var playButton = $(newRow.children()[2]).children()[0];
+    
+    renderSongDataAttributes(playButton, result);
+    $(newRow.children()[1]).text(result.trackName);
+
+    songDisplayTable.append(newRow);
+}
+
+function createArtist(result) {
+    var artistId = result.artistId.toString();
+    console.log("adding artist");
+    console.log(artistId);
+    console.log(result.artistName);
+
+    db.collection("Artists").doc(artistId).set({ 
+        name: result.artistName
+    });
+}
+
+function addUserArtistEntry(user, result) {
+
+    console.log(user);
+    console.log(result.artistId);
+    db.collection("ArtistsUsers").add({
+        userId: user,
+        artistId: result.artistId
+    });
+}
+
+function createArtistAlbumEntry(result) {
+    console.log("adding artist album entry");
+
+    db.collection("ArtistsAlbums").add({
+        artistId: result.artistId,
+        albumId: result.collectionId
+    });
+}
+
+function createAlbum(result) {
+    console.log("adding album to database");
+    var albumId = result.collectionId.toString();
+    console.log(albumId);
+
+    db.collection("Albums").doc(albumId).set({
+        genre: result.primaryGenreName,
+        imageURL: result.artworkUrl100,
+        rating: result.contentAdvisoryRating,
+        name: result.collectionName,
+        price: result.collectionPrice
+    });
+
+    createArtistAlbumEntry(result);
+}
+
+function createAlbumSongEntry(result) {
+    console.log("adding album song entry");
+
+    db.collection("AlbumsSongs").add({
+        albumId: result.collectionId,
+        songId: result.trackId
+    });
+}
+
+function createSong(result) {
+    console.log("we're adding a song");
+    var trackId = result.trackId.toString()
+    console.log(trackId);
+
+    db.collection("Songs").doc(trackId).set({
+        name: result.trackName,
+        price: result.trackPrice,
+        rating: result.trackExplicitness,
+        releaseDate: result.releaseDate,
+        songURL: result.previewUrl,
+        trackNumber: result.trackNumber,
+        duration: result.trackTimeMillis
+    });
+
+    createAlbumSongEntry(result)
+}
+
 
 $(document).ready(function () {
     $(".modal").modal();
@@ -143,4 +251,25 @@ $(document).ready(function () {
         }
     });
 
+    $(".modal-trigger").on("click", function() {
+        // check if shit exists in the database or not
+        console.log("we got in the function");
+        var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + $(this).text() + "&limit=25";
+        console.log(queryURL);
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(response => {
+            results = JSON.parse(response).results;
+            results.forEach(result => {
+                renderSongDisplay(result);
+            })
+           
+        });
+    });
+
+    $(document).on("click", ".add-music-button", function() {
+        console.log("we clicked this friend");
+    });
 });
