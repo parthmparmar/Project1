@@ -90,4 +90,9 @@ thead {
     margin-top: 10px;
     margin-left: 100px;
 }
+#artistDescription{
+    text-align: justify;
+    overflow-y: auto;
+    max-height: 200px;
+}
 

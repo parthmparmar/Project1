@@ -142,5 +142,32 @@ $(document).ready(function () {
             }
         }
     });
+    $(".modal-trigger").on("click", function() {
+        // check if shit exists in the database or not
+        $("#artistDescription").empty();
+        var artistClicked = $(this).text()
+        var audioQueryURL = "https://cors-anywhere.herokuapp.com/" + "theaudiodb.com/api/v1/json/1/search.php?s=" + artistClicked;
+
+        $.ajax({
+            url: audioQueryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                // console.log(response);
+                var result = response.artists;
+                // console.log("audio" +result);
+                var artistBio = result[0].strBiographyEN;
+                // console.log(typeof artistBio);
+               
+                // console.log(result[0].strBiographyEN);
+                    // console.log(artist);
+                    console.log(artistBio );
+                // console.log(artist);
+                $("#artistDescription").append(artistBio);
+
+
+            });
+
+    });
 
 });
