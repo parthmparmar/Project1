@@ -73,3 +73,6 @@ h4 {
 thead {
     font-weight: 500;
 }
+#artistDescription{
+    text-align: justify;
+}

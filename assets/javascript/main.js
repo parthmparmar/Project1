@@ -40,7 +40,7 @@ function renderSongDisplay(result) {
     var songDisplayTable = $(".song-display-table");
     newRow = $(".song-display-row").clone();
     var playButton = $(newRow.children()[2]).children()[0];
-    
+
     renderSongDataAttributes(playButton, result);
     $(newRow.children()[1]).text(result.trackName);
 
@@ -53,7 +53,7 @@ function createArtist(result) {
     console.log(artistId);
     console.log(result.artistName);
 
-    db.collection("Artists").doc(artistId).set({ 
+    db.collection("Artists").doc(artistId).set({
         name: result.artistName
     });
 }
@@ -127,25 +127,25 @@ $(document).ready(function () {
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
 
-        if ($("#userSearch").val() == ""){
+        if ($("#userSearch").val() == "") {
             console.log("shake");
             $("#empty-alert").removeClass("off");
             $("#userSearch").effect("shake");
         }
 
-        if ($("#userSearch").val() != ""){
+        if ($("#userSearch").val() != "") {
             $(".errorStyle").empty();
             $("#empty-alert").addClass("off");
             $(".main-search-result-continer").find(".col").empty();
             id_count = 0;
             resultsArray = [];
             artist_obj = [];
-    
-    
+
+
             var searchValue = $("#userSearch").val().trim().toUpperCase();
-            
+
             $(".recomendations-result-container").text(searchValue);
-    
+
             tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
         };
 
@@ -174,12 +174,13 @@ $(document).ready(function () {
             });
             $("#userSearch").val('');
         }
-        
+
         function callItunesAPI() {
-            var artist
+        
             for (var i = 0; i < resultsArray.length; i++) {
+                var artist;
                 var artistNameFromArray = resultsArray[i]
-                var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + artistNameFromArray + "&limit=1";
+                var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + artistNameFromArray + "&limit=25";
                 $.ajax({
                     url: queryURL,
                     method: "GET"
@@ -187,19 +188,44 @@ $(document).ready(function () {
                     .then(function (response) {
                         var result = JSON.parse(response).results;
                         artist = {
-                            name: result[0].artistName,
-                            genre: result[0].primaryGenreName,
-                            imageURL: result[0].artworkUrl100,
-                            songName: result[0].trackName,
-                            songURL: result[0].previewUrl
+                            name: result[i].artistName,
+                            genre: result[i].primaryGenreName,
+                            imageURL: result[i].artworkUrl100,
+                            songName: result[i].trackName,
+                            songURL: result[i].previewUrl
                         };
-                        artist_obj.push(artist);
+                        
                         id_count++;
                         cardDisplay(id_count, artist);
                     });
+                    
+                var audioQueryURL = "https://cors-anywhere.herokuapp.com/" + "theaudiodb.com/api/v1/json/1/search.php?s=" + artistNameFromArray;
+
+                $.ajax({
+                    url: audioQueryURL,
+                    method: "GET"
+                })
+                    .then(function (response) {
+                        // console.log(response);
+                        var result = response.artists;
+                        // console.log("audio" +result);
+                        var artistBio = result[0].strBiographyEN;
+                        // console.log(typeof artistBio);
+                       
+                        // console.log(result[0].strBiographyEN);
+                            // console.log(artist);
+                            console.log(artistBio + "bio");
+                        artist.artistDescription = artistBio;
+                        artist_obj.push(artist);
+                        console.log(artist);
+
+
+                    });
+
             };
         }
     });
+    
 
 
     function cardDisplay(item, object_artist) {
@@ -208,20 +234,21 @@ $(document).ready(function () {
         var newCard = masterCard.clone(true);
         newCard.attr("id", "card" + (item));
         newCard.removeClass("off");
-        newCard.find(".artist-image").attr("src",object_artist.imageURL);
+        newCard.find(".artist-image").attr("src", object_artist.imageURL);
         newCard.find(".artist-name").text(object_artist.name);
-        newCard.find(".genre").text("Genre: " +object_artist.genre);
-        newCard.find(".song").text("Track Name: " +object_artist.songName);
+        newCard.find(".genre").text("Genre: " + object_artist.genre);
+        newCard.find(".song").text("Track Name: " + object_artist.songName);
         newCard.find(".imageClick").attr("src", object_artist.songURL);
+        newCard.attr(artistDescription, artistBio);
         $("#" + (item)).append(newCard);
     };
 
-    
+
     $(document).on("click", ".imageClick", function () {
         console.log(songPlaying);
         console.log($(this).attr("data-audio-status"));
         console.log(playing_id)
-        
+
         if (songPlaying == false) {
             if ($(this).attr("data-audio-status") != "playing") {
                 playAudio = $(this).attr("src");
@@ -251,25 +278,28 @@ $(document).ready(function () {
         }
     });
 
-    $(".modal-trigger").on("click", function() {
+    $(".modal-trigger").on("click", function () {
         // check if shit exists in the database or not
-        console.log("we got in the function");
-        var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + $(this).text() + "&limit=25";
-        console.log(queryURL);
+        // console.log("we got in the function");
+        // var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + $(this).text() + "&limit=25";
+        // console.log(queryURL);
 
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(response => {
-            results = JSON.parse(response).results;
-            results.forEach(result => {
-                renderSongDisplay(result);
-            })
-           
-        });
+        // $.ajax({
+        //     url: queryURL,
+        //     method: "GET"
+        // }).then(response => {
+        //     results = JSON.parse(response).results;
+        //     results.forEach(result => {
+        //         renderSongDisplay(result);
+        //     })
+
+        // });
+        var modelId= $(this).closest(".col").attr("id");
+        $("#artistDescription").text(artist_obj[modelId-1]);
+
     });
 
-    $(document).on("click", ".add-music-button", function() {
+    $(document).on("click", ".add-music-button", function () {
         console.log("we clicked this friend");
     });
 });
