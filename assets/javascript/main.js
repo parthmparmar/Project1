@@ -6,7 +6,7 @@ var playing_id;
 var error;
 var songPlaying = false;
 var results;
-
+var playButton;
 
 var searchType = "music";
 // key for tasteDiveKey
@@ -17,28 +17,31 @@ var resultsArray = [];
 var newRow;
 
 function renderSongDataAttributes(playButton, result) {
+    if(result.wrapperType != "track") {
+        return;
+    }
+    console.log("we're rendering song data");
     $(playButton).attr({
         "data-song-name": result.trackName,
         "data-song-price": result.trackPrice,
         "data-song-rating": result.trackExplicitness,
-        "data-song-releaseDate": result.releaseDate,
+        "data-song-release-date": result.releaseDate,
         "data-song-url": result.previewUrl,
         "data-song-track-number": result.trackNumber,
         "data-song-duration": result.trackTimeMillis,
-        "data-song-id": result.songId,
-        "data-album-id": result.albumId,
+        "data-song-id": result.trackId.toString(),
+        "data-album-id": result.collectionId.toString(),
         "data-album-genre": result.primaryGenreName,
         "data-album-image-url": result.artworkUrl100,
         "data-album-rating": result.contentAdvisoryRating,
         "data-album-name": result.collectionName,
         "data-album-price": result.collectionPrice
     });
-
 }
 
 function renderSongDisplay(result) {
     var songDisplayTable = $(".song-display-table");
-    newRow = $(".song-display-row").clone();
+    newRow = $("#song-display-row").clone();
     var playButton = $(newRow.children()[2]).children()[0];
     
     renderSongDataAttributes(playButton, result);
@@ -102,22 +105,22 @@ function createAlbumSongEntry(result) {
     });
 }
 
-function createSong(result) {
+function createSong(playButton) {
     console.log("we're adding a song");
-    var trackId = result.trackId.toString()
+    var trackId = $(playButton).attr("data-song-id");
     console.log(trackId);
 
     db.collection("Songs").doc(trackId).set({
-        name: result.trackName,
-        price: result.trackPrice,
-        rating: result.trackExplicitness,
-        releaseDate: result.releaseDate,
-        songURL: result.previewUrl,
-        trackNumber: result.trackNumber,
-        duration: result.trackTimeMillis
+        name: $(playButton).attr("song-name"),
+        price: parseInt($(playButton).attr("data-song-price")),
+        rating: $(playButton).attr("data-song-rating"),
+        releaseDate: $(playButton).attr("data-song-release-date"),
+        songURL: $(playButton).attr("data-song-url"),
+        trackNumber: $(playButton).attr("data-song-track-number"),
+        duration: $(playButton).attr("data-song-duration")
     });
 
-    createAlbumSongEntry(result)
+    // createAlbumSongEntry(result)
 }
 
 
@@ -263,13 +266,16 @@ $(document).ready(function () {
         }).then(response => {
             results = JSON.parse(response).results;
             results.forEach(result => {
+                console.log("calling result");
                 renderSongDisplay(result);
-            })
+            });
            
         });
     });
 
     $(document).on("click", ".add-music-button", function() {
-        console.log("we clicked this friend");
+        playButton = $(this);
+
+        createSong(playButton);
     });
 });
