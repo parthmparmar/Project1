@@ -1,3 +1,4 @@
+var userData;
 var firebaseConfig = {
     apiKey: "AIzaSyBHK6xmt8nJjEx-1ALGRF73NdXyn0AI8Gc",
     authDomain: "project1version2.firebaseapp.com",
@@ -106,7 +107,6 @@ $(document).ready(function () {
     auth.onAuthStateChanged(user => {
         // do shit based on if the user is null or not
         if(user) {
-            var userData;
             getUserRef(user.uid).then(document => {
                 userData = document.data();
                 console.log(userData);
