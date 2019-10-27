@@ -6,13 +6,15 @@
 	font: inherit;
 	vertical-align: baseline;
 }
-
 .grid {
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: minmax(75px, auto);
     text-align: center;
 }
-
+.brand-logo img {
+    width: 130px;
+    padding: 20px 20px 20px 30px;
+}
 .search-media-input {
     grid-row: 1;
     grid-column: 4/14;
@@ -22,8 +24,10 @@
     grid-row: 2;
     grid-column: 4/14;
     display: grid;
-    font-size: 30px;
-    color: rgb(190, 40, 40);
+    font-size: 28px;
+    color:  #b71c1c;
+    text-decoration: none;
+    font-weight: 600;
 }
 .main-search-result-continer {
     margin-top: 80px;
@@ -38,19 +42,34 @@
 .artist-image {
     max-height: 200px;
 }
+.header {
+    font-weight: 800;
+}
 h1 {
-    color: brown;
+    color: #b71c1c;
+    text-align: center;
+    font-weight: 600;
+}
+.bolder {
+    font-weight: 600;
 }
 h4 {
-    color: brown;
+    color: rgb(165, 42, 42);
     text-align: left;
+    padding-bottom: 20px;
+}
+h5 {
+    color: rgb(107, 101, 101);
     padding-bottom: 20px;
 }
 .modal-content img {
     width: 150px;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: gray;
 }
 .modal-content p {
-    text-align: left;;
+    text-align: left;
 }
 .off {
     display: none;
@@ -70,6 +89,27 @@ h4 {
     height: 105px;
     vertical-align: middle;
 }
+.modal-trigger {
+    margin: 0;
+}
 thead {
     font-weight: 500;
 }
+input[type=search-media-input]:focus {
+    outline: none;
+  }
+input[type=search-media-input] {
+    margin-right: 10px;
+}
+.genre {
+    color: #673ab7;
+    font-weight: 600;
+}
+.song {
+    font-weight: 600;
+}
+.card-text {
+    display: flex;
+    justify-content: center;
+}
+
