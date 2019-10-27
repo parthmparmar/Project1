@@ -5,56 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/styles/style.css">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
     <!-- Compiled and minified JavaScript -->
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  -->
     <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
-   
+   <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
 
     <title>Quintessential Curations</title>
 </head>
 
 <body>
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper">
-                <img src="assets/styles/qc.png" class="brand-logo"></img>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
-                    <li><a class="login-input-link">Login</a></li>
-                    <li><a class="logout-input-link">Logout</a></li>
-                    <li><a href="favorites.html" class="fav-input-link">Favorites</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+    <nav>
+        <div class="nav-wrapper" style="color:#d32f2f;">
+            <a href="#!" class="brand-logo">QC</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
+                <li><a class="login-input-link">Login</a></li>
+                <li><a class="logout-input-link">Logout</a></li>
+                <!-- Dropdown Trigger -->
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <header>
-            <h1 id="mainQC" style="text-align: center;">Quintessential Curations</h1>
+            <h1 style="text-align: center;">Quintessential Curations</h1>
         </header>
         <div id="user-sign-up-modal" class="modal">
             <div class="modal-content">
                 <h4 style="margin-bottom: 40px">Sign Up!</h4>
-
+                
                 <div class="row">
-                    <form class="col s12" id="user-sign-up-form">
+                    <form class="col s12"id="user-sign-up-form">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input placeholder="Placeholder" id="user-first-name-input" type="text"
-                                    class="validate">
+                                <input placeholder="Placeholder" id="user-first-name-input" type="text" class="validate">
                                 <label for="first_name">First Name</label>
                             </div>
                         </div>
@@ -85,80 +85,105 @@
             </div>
         </div>
         <div id="user-login-modal" class="modal">
-            <div class="modal-content">
-                <h4 style="margin-bottom: 40px">Login</h4>
-
-                <div class="row">
-                    <form class="col s12" id="user-login-form">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="login-email-input" type="email" class="validate">
-                                <label for="email">Email</label>
+                <div class="modal-content">
+                    <h4 style="margin-bottom: 40px">Login</h4>
+                    
+                    <div class="row">
+                        <form class="col s12"id="user-login-form">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="login-email-input" type="email" class="validate">
+                                    <label for="email">Email</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="login-password-input" type="password" class="validate">
-                                <label for="password">Password</label>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="login-password-input" type="password" class="validate">
+                                    <label for="password">Password</label>
+                                </div>
                             </div>
-                        </div>
-                        <input type="submit" class="modal-close">
-                    </form>
+                            <input type="submit" class="modal-close">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
                 </div>
             </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-            </div>
-        </div>
         <div class="grid">
             <form class="search-media">
                 <h5>Search for your favorite Artist</h5>
-                <input type="search-media-input" placeholder="Billy Joel" id="userSearch" autocomplete="off"
-                    size="30"></input>
-                <button class="btn-large waves-effect waves-light red darken-3" type="submit" name="action"
-                    id="userArtistInput">Search<i class="material-icons right">search</i>
+                <input type="search-media-input" placeholder="Billy Joel" id= "userSearch" autocomplete="off" size="30"></input>
+                <button class="btn-large waves-effect waves-light red darken-3" type="submit" name="action" id="userArtistInput">Search<i class="material-icons right">search</i>
                 </button>
-            </form>
-            <div class="row">
-                <small id="empty-alert" class="form-text text-muted off">Please enter an artist and click
-                    search.</small>
-            </div>
+            </form>          
+           <div class="row">
+            <small id="empty-alert" class="form-text text-muted off">Please enter an artist and click search.</small>
+           </div>
             <div class="recomendations-result-container">
             </div>
             <div class="master">
                 <div id="card" class="custom-card off">
-                    <div class="card medium hoverable">
+                    <div class="card medium">
                         <div class="card-image">
-                            <img class="artist-image"
-                                src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg">
-                            <span class="card-title" style="padding: 8px;"><a
-                                    class="btn-floating btn-medium waves-effect waves-light blue lighten-2"><i
-                                        data-audio-status="paused"
-                                        class="material-icons imageClick">play_circle_filled</i></a></span>
-                            <!-- </div> -->
+                            <img class ="artist-image" src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg">
+                            <span class="card-title" style="padding: 8px;"><a class="btn-floating btn-medium waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></span> 
+                        <!-- </div> -->
                             <!-- <span class="card-title artist-name">Artist Name</span> -->
                         </div>
                         <div class="card-content">
-                            <p class="genre">Genre<p>
-                                    <p class="song">Song</p>
+                            <p class = "genre">Genre<p>
+                            <p class ="song">Song</p>
                         </div>
                         <div class="card-action">
                             <!-- added model trigger here - class="modal-trigger" -->
-                            <a href="#modal1" class="modal-trigger"><span class="card-title artist-name"
-                                    style="font-weight: 400; color: #8f3333; text-transform: none;">Artist
-                                    Name</span></a>
+                                <a href="#modal1" class="modal-trigger"><span class="card-title artist-name" style="font-weight: 400; color: #8f3333; text-transform: none;" >Artist Name</span></a>
                             <!-- <a class = "song-click" href="https://audio-ssl.itunes.apple.com/itunes-assets/Music/v4/a5/fd/be/a5fdbecc-2df9-3925-b4a0-784c423bbcee/mzaf_6527837479129833721.plus.aac.p.m4a"><i class="small material-icons">play_circle_filled</i> Play Music</a> -->
                         </div>
                     </div>
                 </div>
 
-                <div class="main-search-result-continer" data-audio-status="paused">
-                    <!-- First Row-->
+<div class="main-search-result-continer" data-audio-status = "paused">
+        <!-- First Row-->
+        <div class="row" >
+            <!-- First Card-->
+            <div id="1" class="col s3">
+            </div>
+            <!-- Second Card-->
+            <div id="2" class="col s3">
+            </div>
+            <!-- Third Card-->
+            <div id="3" class="col s3">
+            </div>
+            <!-- Fourth Card -->
+            <div  id="4" class="col s3">
+            </div>
+        </div>
+​
+        <!-- Second Row-->
+        <div class="row">
+            <!-- First Card-->
+            <div id="5" class="col s3">
+            </div>
+            <!-- Second Card-->
+            <div id="6" class="col s3">   
+            </div>
+            <!-- Third Card-->
+            <div id="7" class="col s3"> 
+            </div>
+            <!-- Fourth Card -->
+            <div id="8" class="col s3"> 
+            </div>
+        </div>
+    </div>
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
                     <div class="row">
-                          <div class="col s12"><h4>Artist Name <i class="small material-icons grey lighten-2">star</i></h4> </div>
-                          <div class="col s3"><img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;"></div>
-                          <div class="col s9">
-                            <p> Description Here <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id gravida libero, non fringilla purus. Donec eu nulla et ligula vehicula cursus. Donec sit amet dolor non urna vulputate accumsan. Suspendisse potenti. Aliquam pretium, velit vitae faucibus gravida, mauris sapien pharetra risus, nec sodales leo sem sit amet tortor. Duis eros justo, bibendum id enim vel, iaculis luctus nisl. Pellentesque fermentum interdum finibus. Donec sollicitudin sodales dapibus. </p>
+                            <div class="col s12"><h4>Artist Name <i class="small material-icons grey lighten-2">star</i></h4> </div>
+                            <div class="col s3"><img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;"></div>
+                            <div class="col s9" id="artistDescription">
+                                <!-- <p> Description Here <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id gravida libero, non fringilla purus. Donec eu nulla et ligula vehicula cursus. Donec sit amet dolor non urna vulputate accumsan. Suspendisse potenti. Aliquam pretium, velit vitae faucibus gravida, mauris sapien pharetra risus, nec sodales leo sem sit amet tortor. Duis eros justo, bibendum id enim vel, iaculis luctus nisl. Pellentesque fermentum interdum finibus. Donec sollicitudin sodales dapibus. </p> -->
                             </div>
                           </div>
                 
@@ -171,142 +196,28 @@
                         </tr>
                     </thead>
 
-                    <tbody>
-                        <tr>
+                    <tbody class="song-display-table">
+                        <tr class="song-display-row">
                             <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td colspan="2" style="text-align:left;">Song Track here </td>
-                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4"><i class="material-icons">check</i></a></td>
-                        </tr>
-                        <tr>
-                            <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td colspan="2">Song Track here </td>
-                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4"><i class="material-icons">check</i></a></td>
-                        </tr>
-                        <tr>
-                            <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td colspan="2">Song Track here </td>
-                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4"><i class="material-icons">check</i></a></td>
-                        </tr>
-                        <tr>
-                            <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td colspan="2">Song Track here </td>
-                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4"><i class="material-icons">check</i></a></td>
-                        </tr>
-                        <tr>
-                            <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td colspan="2">Song Track here </td>
-                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4"><i class="material-icons">check</i></a></td>
-                        </tr>
-                        <tr>
-                            <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td colspan="2">Song Track here</td>
-                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4"><i class="material-icons">check</i></a></td>
-                        </tr>
-                        <tr>
-                            <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td colspan="2">Song Track here</td>
-                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4"><i class="material-icons">check</i></a></td>
+                            <td class="song-name-display" colspan="2" style="text-align:left;">Song Track here </td>
+                            <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4 add-music-button"><i class="material-icons play-button">add</i></a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
 
-                        <table class="highlight responsive">
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Track Name</th>
-                                    <th style="text-align:right;">Add to Favorites</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td style="width:50px"><a
-                                            class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i
-                                                data-audio-status="paused"
-                                                class="material-icons imageClick">play_circle_filled</i></a></td>
-                                    <td colspan="2" style="text-align:left;">Song Track here </td>
-                                    <td style="text-align:right;"><a
-                                            class="btn-floating btn-small waves-effect waves-light red darken-4"><i
-                                                class="material-icons">add</i></a></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50px"><a
-                                            class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i
-                                                data-audio-status="paused"
-                                                class="material-icons imageClick">play_circle_filled</i></a></td>
-                                    <td colspan="2">Song Track here </td>
-                                    <td style="text-align:right;"><a
-                                            class="btn-floating btn-small waves-effect waves-light red darken-4"><i
-                                                class="material-icons">add</i></a></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50px"><a
-                                            class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i
-                                                data-audio-status="paused"
-                                                class="material-icons imageClick">play_circle_filled</i></a></td>
-                                    <td colspan="2">Song Track here </td>
-                                    <td style="text-align:right;"><a
-                                            class="btn-floating btn-small waves-effect waves-light red darken-4"><i
-                                                class="material-icons">add</i></a></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50px"><a
-                                            class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i
-                                                data-audio-status="paused"
-                                                class="material-icons imageClick">play_circle_filled</i></a></td>
-                                    <td colspan="2">Song Track here </td>
-                                    <td style="text-align:right;"><a
-                                            class="btn-floating btn-small waves-effect waves-light red darken-4"><i
-                                                class="material-icons">add</i></a></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50px"><a
-                                            class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i
-                                                data-audio-status="paused"
-                                                class="material-icons imageClick">play_circle_filled</i></a></td>
-                                    <td colspan="2">Song Track here </td>
-                                    <td style="text-align:right;"><a
-                                            class="btn-floating btn-small waves-effect waves-light red darken-4"><i
-                                                class="material-icons">add</i></a></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50px"><a
-                                            class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i
-                                                data-audio-status="paused"
-                                                class="material-icons imageClick">play_circle_filled</i></a></td>
-                                    <td colspan="2">Song Track here</td>
-                                    <td style="text-align:right;"><a
-                                            class="btn-floating btn-small waves-effect waves-light red darken-4"><i
-                                                class="material-icons">add</i></a></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50px"><a
-                                            class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i
-                                                data-audio-status="paused"
-                                                class="material-icons imageClick">play_circle_filled</i></a></td>
-                                    <td colspan="2">Song Track here</td>
-                                    <td style="text-align:right;"><a
-                                            class="btn-floating btn-small waves-effect waves-light red darken-4"><i
-                                                class="material-icons">add</i></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-                    </div>
-                </div>
-                <footer></footer>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
             </div>
+        </div>
+        <footer></footer>
+    </div>
+   
 
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            <script src="assets/javascript/main.js"></script>
-            <script src="assets/javascript/auth.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="assets/javascript/auth.js"></script>
+    <script src="assets/javascript/main.js"></script>
 </body>
 
 </html>

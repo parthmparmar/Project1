@@ -118,4 +118,9 @@ input[type=search-media-input] {
     display: flex;
     justify-content: center;
 }
+#artistDescription{
+    height: 200px;
+    overflow-x: auto;
+    text-align: justify;
+}
 
