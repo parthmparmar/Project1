@@ -17,11 +17,11 @@ var resultsArray = [];
 var newRow;
 
 function renderSongDataAttributes(playButton, result) {
-    if(result.wrapperType != "track") {
-        return;
-    }
     console.log("we're rendering song data");
-    $(playButton).attr({
+
+    var data = {
+        "data-artist-id": result.artistId,
+        "data-artist-name": result.artistName,
         "data-song-name": result.trackName,
         "data-song-price": result.trackPrice,
         "data-song-rating": result.trackExplicitness,
@@ -29,19 +29,29 @@ function renderSongDataAttributes(playButton, result) {
         "data-song-url": result.previewUrl,
         "data-song-track-number": result.trackNumber,
         "data-song-duration": result.trackTimeMillis,
-        "data-song-id": result.trackId.toString(),
-        "data-album-id": result.collectionId.toString(),
+        "data-song-id": result.trackId,
+        "data-album-id": result.collectionId,
         "data-album-genre": result.primaryGenreName,
         "data-album-image-url": result.artworkUrl100,
         "data-album-rating": result.contentAdvisoryRating,
         "data-album-name": result.collectionName,
         "data-album-price": result.collectionPrice
-    });
+    }
+
+    console.log(data);
+
+    $(playButton).attr(data);
 }
 
 function renderSongDisplay(result) {
+    if(result.wrapperType != "track" || result.kind != "song") {
+        return;
+    }
+
     var songDisplayTable = $(".song-display-table");
     newRow = $("#song-display-row").clone();
+    console.log(newRow);
+    newRow.removeClass("hidden");
     var playButton = $(newRow.children()[2]).children()[0];
     
     renderSongDataAttributes(playButton, result);
@@ -50,77 +60,67 @@ function renderSongDisplay(result) {
     songDisplayTable.append(newRow);
 }
 
-function createArtist(result) {
-    var artistId = result.artistId.toString();
-    console.log("adding artist");
-    console.log(artistId);
-    console.log(result.artistName);
+function createArtist(playButton) {
+    var artistId = playButton.attr("data-artist-id").toString();
 
     db.collection("Artists").doc(artistId).set({ 
-        name: result.artistName
+        name: playButton.attr("data-artist-name")
     });
 }
 
-function addUserArtistEntry(user, result) {
-
-    console.log(user);
-    console.log(result.artistId);
+function createUserArtistEntry(userId, playButton) {
     db.collection("ArtistsUsers").add({
-        userId: user,
-        artistId: result.artistId
+        userId: userId,
+        artistId: parseInt(playButton.attr("data-artist-id"))
     });
 }
 
-function createArtistAlbumEntry(result) {
-    console.log("adding artist album entry");
+function createArtistAlbumEntry(playButton) {
+    console.log(parseInt(playButton.attr("data-artist-id")));
+    console.log(parseInt(playButton.attr("data-album-id")));
+    console.log(playButton.attr("data-artist-name"));
+    console.log(playButton.attr("data-album-name"));
 
     db.collection("ArtistsAlbums").add({
-        artistId: result.artistId,
-        albumId: result.collectionId
+        artistId: parseInt(playButton.attr("data-artist-id")),
+        artistName: playButton.attr("data-artist-name"),
+        albumId: parseInt(playButton.attr("data-album-id")),
+        albumName: playButton.attr("data-album-name")
     });
 }
 
-function createAlbum(result) {
-    console.log("adding album to database");
-    var albumId = result.collectionId.toString();
-    console.log(albumId);
+function createAlbum(playButton) {
+    var albumId = playButton.attr("data-album-id").toString();
 
     db.collection("Albums").doc(albumId).set({
-        genre: result.primaryGenreName,
-        imageURL: result.artworkUrl100,
-        rating: result.contentAdvisoryRating,
-        name: result.collectionName,
-        price: result.collectionPrice
+        genre: playButton.attr("data-album-genre"),
+        imageURL: playButton.attr("data-album-image-url"),
+        name: playButton.attr("data-album-name"),
+        price: playButton.attr("data-album-price")
     });
-
-    createArtistAlbumEntry(result);
 }
 
-function createAlbumSongEntry(result) {
-    console.log("adding album song entry");
+function createAlbumSongEntry(playButton) {
 
     db.collection("AlbumsSongs").add({
-        albumId: result.collectionId,
-        songId: result.trackId
+        albumId: parseInt(playButton.attr("data-album-id")),
+        songId: parseInt(playButton.attr("data-song-id"))
     });
 }
 
 function createSong(playButton) {
-    console.log("we're adding a song");
     var trackId = $(playButton).attr("data-song-id");
-    console.log(trackId);
 
     db.collection("Songs").doc(trackId).set({
-        name: $(playButton).attr("song-name"),
+        name: $(playButton).attr("data-song-name"),
         price: parseInt($(playButton).attr("data-song-price")),
         rating: $(playButton).attr("data-song-rating"),
         releaseDate: $(playButton).attr("data-song-release-date"),
         songURL: $(playButton).attr("data-song-url"),
-        trackNumber: $(playButton).attr("data-song-track-number"),
-        duration: $(playButton).attr("data-song-duration")
+        trackNumber: parseInt($(playButton).attr("data-song-track-number")),
+        duration: parseInt($(playButton).attr("data-song-duration"))
     });
 
-    // createAlbumSongEntry(result)
 }
 
 
@@ -255,10 +255,12 @@ $(document).ready(function () {
     });
 
     $(".modal-trigger").on("click", function() {
-        // check if shit exists in the database or not
-        console.log("we got in the function");
         var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + $(this).text() + "&limit=25";
-        console.log(queryURL);
+
+        var childRows = $("tbody").children();
+        for(var i = 1; i < childRows.length; i++) {
+            childRows[i].remove();
+        }
 
         $.ajax({
             url: queryURL,
@@ -266,16 +268,16 @@ $(document).ready(function () {
         }).then(response => {
             results = JSON.parse(response).results;
             results.forEach(result => {
-                console.log("calling result");
                 renderSongDisplay(result);
             });
-           
         });
+ 
     });
 
     $(document).on("click", ".add-music-button", function() {
         playButton = $(this);
-
-        createSong(playButton);
+        console.log("we got clicked the add button");
+        createArtistAlbumEntry(playButton)    
     });
 });
+
