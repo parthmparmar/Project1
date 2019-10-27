@@ -68,24 +68,19 @@ function createArtist(playButton) {
     });
 }
 
-function createUserArtistEntry(userId, playButton) {
-    db.collection("ArtistsUsers").add({
+function createUserSongEntry(userId, playButton) {
+
+    db.collection("UsersSongs").add({
         userId: userId,
-        artistId: parseInt(playButton.attr("data-artist-id"))
+        songId: parseInt(playButton.attr("data-song-id"))
     });
 }
 
-function createArtistAlbumEntry(playButton) {
-    console.log(parseInt(playButton.attr("data-artist-id")));
-    console.log(parseInt(playButton.attr("data-album-id")));
-    console.log(playButton.attr("data-artist-name"));
-    console.log(playButton.attr("data-album-name"));
+function createArtistSongEntry(playButton) {
 
     db.collection("ArtistsAlbums").add({
         artistId: parseInt(playButton.attr("data-artist-id")),
-        artistName: playButton.attr("data-artist-name"),
-        albumId: parseInt(playButton.attr("data-album-id")),
-        albumName: playButton.attr("data-album-name")
+        songId: parseInt(playButton.attr("data-song-id")),
     });
 }
 
@@ -277,7 +272,7 @@ $(document).ready(function () {
     $(document).on("click", ".add-music-button", function() {
         playButton = $(this);
         console.log("we got clicked the add button");
-        createArtistAlbumEntry(playButton)    
+        createUserSongEntry(globalUser, playButton)
     });
 });
 
