@@ -97,14 +97,12 @@ async function setUserProfileSongs(promise) {
     promise.then(snapshot => {
         snapshot.docs.forEach(async doc => {
             var id = doc.data().songId.toString();
-            console.log(id);
             var song = await db.collection("Songs").doc(id).get();
-            console.log(song.data());
 
             var newSong = new Song(id, song.data());
             globalUserProfile.songs.push(newSong);
             setUserProfileAlbum(id);
-            setUserProfileArtist(id)
+            setUserProfileArtist(id);
         });
     });
 }
@@ -130,20 +128,16 @@ $(document).ready(function () {
     $(".modal").modal();
 
     $(".sign-up-input-link").on("click", () => {
-        console.log("we in this bitch");
         $("#user-sign-up-modal").modal("open");
     })
 
     userSignUpForm.on("submit", event => {
         event.preventDefault();
-        console.log("we got in here");
 
         const firstName = $("#user-first-name-input").val();
         const lastName = $("#user-last-name-input").val();
         const email = $("#user-email-input").val();
         const password = $("#user-password-input").val();
-
-        console.log({firstName, lastName, email, password});
         
         auth.createUserWithEmailAndPassword(email, password).then(credential => {
             user = credential.user;
@@ -159,7 +153,6 @@ $(document).ready(function () {
     });
 
     $(".login-input-link").on("click", () => {
-        console.log("we in this bitch");
         $("#user-login-modal").modal("open");
     });
 
@@ -169,7 +162,6 @@ $(document).ready(function () {
         const email =$("#login-email-input").val();
         const password = $("#login-password-input").val();
         auth.signInWithEmailAndPassword(email, password).then(credential => {
-            console.log("user logged in");
             console.log(credential.user.uid);
         }).catch(error => {
             console.log(error.message);
