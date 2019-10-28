@@ -97,7 +97,9 @@ async function setUserProfileSongs(promise) {
     promise.then(snapshot => {
         snapshot.docs.forEach(async doc => {
             var id = doc.data().songId.toString();
+            console.log(id);
             var song = await db.collection("Songs").doc(id).get();
+            console.log(song.data());
 
             var newSong = new Song(id, song.data());
             globalUserProfile.songs.push(newSong);
@@ -186,6 +188,7 @@ $(document).ready(function () {
             globalUserProfile = new Profile([], [], []);
 
             var songIdPromise = getSongIdsPromise(globalUser);
+
             setUserProfileSongs(songIdPromise);
 
         } else {
