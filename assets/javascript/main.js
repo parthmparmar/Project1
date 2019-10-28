@@ -8,7 +8,7 @@ var songPlaying = false;
 
 var searchType = "music";
 // key for tasteDiveKey
-var tasteDiveKey = "348203-ClassPro-YG3CBL5R";
+var tasteDiveKey = "348668-qc-DV7CJIC4";
 // search limit for the aip to result 
 var searchLimit = 9;
 var resultsArray = [];
@@ -43,6 +43,7 @@ $(document).ready(function () {
 
         function tasteDive(value, type, key, limit) {
             queryURL = "https://cors-anywhere.herokuapp.com/" + "https://tastedive.com/api/similar?q=" + value + "&type=" + type + "&k=" + key + "&limit=" + limit;
+            console.log("test");
             $.ajax({
                 url: queryURL,
                 method: "GET"
