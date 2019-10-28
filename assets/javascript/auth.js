@@ -177,7 +177,7 @@ $(document).ready(function () {
         $("#user-login-form").trigger("reset");
     });
 
-    $(".user-logout-link").on("click", () => {
+    $(".logout-input-link").on("click", () => {
         console.log("user signed out");
         auth.signOut();
     })
@@ -186,6 +186,10 @@ $(document).ready(function () {
         if(user) {
             globalUser = user.uid;
             globalUserProfile = new Profile([], [], []);
+            $(".sign-up-input-link").addClass("off");
+            $(".login-input-link").addClass("off");
+            $(".logout-input-link").removeClass("off");
+            $(".fav-input-btn").removeClass("off");
 
             var songIdPromise = getSongIdsPromise(globalUser);
 
@@ -194,6 +198,10 @@ $(document).ready(function () {
         } else {
             console.log("user logged out");
             console.log({user});
+            $(".sign-up-input-link").removeClass("off");
+            $(".login-input-link").removeClass("off");
+            $(".logout-input-link").addClass("off");
+            $(".fav-input-btn").addClass("off");
         }
      });
 });
