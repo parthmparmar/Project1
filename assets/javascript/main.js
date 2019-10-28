@@ -7,7 +7,8 @@ var error;
 var songPlaying = false;
 var results;
 var playButton;
-var caseAdded;
+var entryAdded = false;
+
 
 var searchType = "music";
 // key for tasteDiveKey
@@ -38,6 +39,19 @@ function renderSongDataAttributes(playButton, result) {
     }
 
     $(playButton).attr(data);
+}
+
+function updateUserIfObjectDne(playButton) {
+    var userProfileProps = Object.keys(globalUserProfile);
+    var ids = [playButton.attr("data-artist-id"), playButton.attr("data-album-id"), playButton.attr("data-song-id")];
+
+    userProfileProps.forEach((prop, i) => {
+        globalUserProfile[prop].forEach((obj, j) => {
+            if(obj.id == ids[i]) {
+                console.log("shit already exists");
+            }
+        });
+    });
 }
 
 function renderSongDisplay(result) {
@@ -76,7 +90,7 @@ async function getCollectionPromise(collectionName, artistId) {
 }
 
 async function updateDBIfObjectDoesntExist(playButton) {
-    var entryAdded = false;
+    entryAdded = false;
     var cases = ["Artists", "Albums", "Songs"];
     var ids = [playButton.attr("data-artist-id"), playButton.attr("data-album-id"), playButton.attr("data-song-id")];
     var promises = [];
@@ -117,7 +131,7 @@ async function updateDBIfObjectDoesntExist(playButton) {
                         createAlbum(playButton);
                         createAlbumSongEntry(playButton);
                         createSong(playButton);
-                        createUserSongEntry(playButton);
+                        createUserSongEntry(globalUser, playButton);
                         break;
                     }
                     
@@ -130,7 +144,7 @@ async function updateDBIfObjectDoesntExist(playButton) {
                         console.log(entryAdded);
                         createSong(playButton);
                         createUserSongEntry(playButton);
-                        createArtistSongEntry(playButton);
+                        createArtistSongEntry(globalUser, playButton);
                         break;
                     }
                     
@@ -348,17 +362,8 @@ $(document).ready(function () {
     $(document).on("click", ".add-music-button", function() {
         playButton = $(this);
         console.log("we got clicked the add button");
-        /*
-        for db: 
-        1. check if the artist exists (if the artist doesn't exist, then the album and song don't exist... this will also be 
-        true for the user)
-        2. check if the album exists (if the album doesn't exists, then the song doesn't exist. This will also be true for the user)
-        3. check if the song exists 
-
-        for user: 
-
-        */
         updateDBIfObjectDoesntExist(playButton);
     });
 });
 
+console.log(entryAdded);
