@@ -78,3 +78,7 @@ thead {
     height: 200px;
     overflow-y: auto;
 }
+
+.hidden {
+    display: none;
+}

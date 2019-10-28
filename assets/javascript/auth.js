@@ -8,11 +8,106 @@ var firebaseConfig = {
     appId: "1:885016440307:web:d019bee8fba4dc5b62b686"
  };
 
- var globalUser;
- firebase.initializeApp(firebaseConfig);
- // making database and auth connection
- const db = firebase.firestore();
- const auth = firebase.auth();
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+var globalUser;
+var globalUserProfile;
+var albumIds = [];
+var artistIds = [];
+
+class Profile {
+    constructor(artists, albums, songs) {
+        this.artists = artists;
+        this.albums = albums;
+        this.songs = songs;
+    }
+}
+
+class Song {
+    constructor(id, obj) {
+        this.id = id,
+        this.name = obj.name, 
+        this.duration = obj.duration,
+        this.price = obj.price,
+        this.releaseDate = obj.releaseDate,
+        this.url = obj.songURL, 
+        this.trackNumber = obj.trackNumber
+    }
+}
+
+class Album {
+    constructor(id, obj) {
+        this.id = id;
+        this.name = obj.name;
+        this.genre = obj.genre;
+        this.price = obj.price;
+        this.imageUrl = obj.imageUrl;
+    }
+}
+
+class Artist {
+    constructor(id, obj) {
+        this.id = id;
+        this.name = obj.name;
+    }
+}
+
+async function setUserProfileArtist(songId) {
+    var snapshot = await db.collection("ArtistsSongs").where("songId", "==", parseInt(songId)).get();
+
+    snapshot.docs.forEach(async doc => {
+        var artistId = doc.data().artistId;
+        if(!artistIds.includes(artistId)) {
+            artistIds.push(artistId);
+
+            var artistData = await db.collection("Artists").doc(artistId.toString()).get();
+            var newArtist = new Artist(artistId, artistData.data());
+            globalUserProfile.artists.push(newArtist);
+        }
+    });
+}
+
+async function setUserProfileAlbum(id) {
+    var snapshot = await db.collection("AlbumsSongs").where("songId", "==", parseInt(id)).get();
+
+    snapshot.docs.forEach(async doc => {
+        var albumId = doc.data().albumId;
+        if(!albumIds.includes(albumId)) {
+            albumIds.push(albumId);
+
+            var albumData = await db.collection("Albums").doc(albumId.toString()).get();
+            var newAlbum = new Album(albumId, albumData.data());
+            globalUserProfile.albums.push(newAlbum);
+        }
+    });
+}
+
+async function getSongIdsPromise(songId) {
+    var snapshot = await db.collection("UsersSongs").where("userId", "==", songId).get();
+    
+    return snapshot;
+}
+
+async function setUserProfileSongs(promise) {
+    songs = [];
+
+    promise.then(snapshot => {
+        snapshot.docs.forEach(async doc => {
+            var id = doc.data().songId.toString();
+            console.log(id);
+            var song = await db.collection("Songs").doc(id).get();
+            console.log(song.data());
+
+            var newSong = new Song(id, song.data());
+            globalUserProfile.songs.push(newSong);
+            setUserProfileAlbum(id);
+            setUserProfileArtist(id)
+        });
+    });
+}
 
  function createUser(userId, firstName, lastName, email) {
     db.collection("Users").doc(userId).set({
@@ -21,22 +116,6 @@ var firebaseConfig = {
         email: email
     });
  }
-
- function getUserRef(userId) {
-    var userRef = db.collection("Users").doc(userId).get();
-    return userRef;
- }
-
- function createArtist(genre, imageURL, name, songName, songURL) {
-    db.collection("Artists").add({
-        genre: genre,
-        imageURL: imageURL,
-        name: name,
-        songName: songName,
-        songURL: songURL
-    });
- }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('.modal');
@@ -104,21 +183,17 @@ $(document).ready(function () {
     })
 
     auth.onAuthStateChanged(user => {
-        // do shit based on if the user is null or not
         if(user) {
             globalUser = user.uid;
-            console.log(globalUser);
-            var userData;
-            getUserRef(user.uid).then(document => {
-                userData = document.data();
-                console.log(userData);
-            });
+            globalUserProfile = new Profile([], [], []);
+
+            var songIdPromise = getSongIdsPromise(globalUser);
+
+            setUserProfileSongs(songIdPromise);
+
         } else {
             console.log("user logged out");
             console.log({user});
         }
      });
-    
-    
-
 });
