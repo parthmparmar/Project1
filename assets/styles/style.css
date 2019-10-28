@@ -75,4 +75,6 @@ thead {
 }
 #artistDescription{
     text-align: justify;
+    height: 200px;
+    overflow-y: auto;
 }

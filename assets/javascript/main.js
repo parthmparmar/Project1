@@ -5,8 +5,6 @@ var id_count = -1;
 var playing_id;
 var error;
 var songPlaying = false;
-var results;
-
 
 var searchType = "music";
 // key for tasteDiveKey
@@ -14,112 +12,6 @@ var tasteDiveKey = "348203-ClassPro-YG3CBL5R";
 // search limit for the aip to result 
 var searchLimit = 9;
 var resultsArray = [];
-var newRow;
-
-function renderSongDataAttributes(playButton, result) {
-    $(playButton).attr({
-        "data-song-name": result.trackName,
-        "data-song-price": result.trackPrice,
-        "data-song-rating": result.trackExplicitness,
-        "data-song-releaseDate": result.releaseDate,
-        "data-song-url": result.previewUrl,
-        "data-song-track-number": result.trackNumber,
-        "data-song-duration": result.trackTimeMillis,
-        "data-song-id": result.songId,
-        "data-album-id": result.albumId,
-        "data-album-genre": result.primaryGenreName,
-        "data-album-image-url": result.artworkUrl100,
-        "data-album-rating": result.contentAdvisoryRating,
-        "data-album-name": result.collectionName,
-        "data-album-price": result.collectionPrice
-    });
-
-}
-
-function renderSongDisplay(result) {
-    var songDisplayTable = $(".song-display-table");
-    newRow = $(".song-display-row").clone();
-    var playButton = $(newRow.children()[2]).children()[0];
-
-    renderSongDataAttributes(playButton, result);
-    $(newRow.children()[1]).text(result.trackName);
-
-    songDisplayTable.append(newRow);
-}
-
-function createArtist(result) {
-    var artistId = result.artistId.toString();
-    console.log("adding artist");
-    console.log(artistId);
-    console.log(result.artistName);
-
-    db.collection("Artists").doc(artistId).set({
-        name: result.artistName
-    });
-}
-
-function addUserArtistEntry(user, result) {
-
-    console.log(user);
-    console.log(result.artistId);
-    db.collection("ArtistsUsers").add({
-        userId: user,
-        artistId: result.artistId
-    });
-}
-
-function createArtistAlbumEntry(result) {
-    console.log("adding artist album entry");
-
-    db.collection("ArtistsAlbums").add({
-        artistId: result.artistId,
-        albumId: result.collectionId
-    });
-}
-
-function createAlbum(result) {
-    console.log("adding album to database");
-    var albumId = result.collectionId.toString();
-    console.log(albumId);
-
-    db.collection("Albums").doc(albumId).set({
-        genre: result.primaryGenreName,
-        imageURL: result.artworkUrl100,
-        rating: result.contentAdvisoryRating,
-        name: result.collectionName,
-        price: result.collectionPrice
-    });
-
-    createArtistAlbumEntry(result);
-}
-
-function createAlbumSongEntry(result) {
-    console.log("adding album song entry");
-
-    db.collection("AlbumsSongs").add({
-        albumId: result.collectionId,
-        songId: result.trackId
-    });
-}
-
-function createSong(result) {
-    console.log("we're adding a song");
-    var trackId = result.trackId.toString()
-    console.log(trackId);
-
-    db.collection("Songs").doc(trackId).set({
-        name: result.trackName,
-        price: result.trackPrice,
-        rating: result.trackExplicitness,
-        releaseDate: result.releaseDate,
-        songURL: result.previewUrl,
-        trackNumber: result.trackNumber,
-        duration: result.trackTimeMillis
-    });
-
-    createAlbumSongEntry(result)
-}
-
 
 $(document).ready(function () {
     $(".modal").modal();
@@ -127,25 +19,25 @@ $(document).ready(function () {
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
 
-        if ($("#userSearch").val() == "") {
+        if ($("#userSearch").val() == ""){
             console.log("shake");
             $("#empty-alert").removeClass("off");
             $("#userSearch").effect("shake");
         }
 
-        if ($("#userSearch").val() != "") {
+        if ($("#userSearch").val() != ""){
             $(".errorStyle").empty();
             $("#empty-alert").addClass("off");
             $(".main-search-result-continer").find(".col").empty();
             id_count = 0;
             resultsArray = [];
             artist_obj = [];
-
-
+    
+    
             var searchValue = $("#userSearch").val().trim().toUpperCase();
-
+            
             $(".recomendations-result-container").text(searchValue);
-
+    
             tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
         };
 
@@ -174,13 +66,12 @@ $(document).ready(function () {
             });
             $("#userSearch").val('');
         }
-
-        function callItunesAPI() {
         
+        function callItunesAPI() {
+            var artist
             for (var i = 0; i < resultsArray.length; i++) {
-                var artist;
                 var artistNameFromArray = resultsArray[i]
-                var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + artistNameFromArray + "&limit=25";
+                var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + artistNameFromArray + "&limit=1";
                 $.ajax({
                     url: queryURL,
                     method: "GET"
@@ -188,44 +79,19 @@ $(document).ready(function () {
                     .then(function (response) {
                         var result = JSON.parse(response).results;
                         artist = {
-                            name: result[i].artistName,
-                            genre: result[i].primaryGenreName,
-                            imageURL: result[i].artworkUrl100,
-                            songName: result[i].trackName,
-                            songURL: result[i].previewUrl
+                            name: result[0].artistName,
+                            genre: result[0].primaryGenreName,
+                            imageURL: result[0].artworkUrl100,
+                            songName: result[0].trackName,
+                            songURL: result[0].previewUrl
                         };
-                        
+                        artist_obj.push(artist);
                         id_count++;
                         cardDisplay(id_count, artist);
                     });
-                    
-                var audioQueryURL = "https://cors-anywhere.herokuapp.com/" + "theaudiodb.com/api/v1/json/1/search.php?s=" + artistNameFromArray;
-
-                $.ajax({
-                    url: audioQueryURL,
-                    method: "GET"
-                })
-                    .then(function (response) {
-                        // console.log(response);
-                        var result = response.artists;
-                        // console.log("audio" +result);
-                        var artistBio = result[0].strBiographyEN;
-                        // console.log(typeof artistBio);
-                       
-                        // console.log(result[0].strBiographyEN);
-                            // console.log(artist);
-                            console.log(artistBio + "bio");
-                        artist.artistDescription = artistBio;
-                        artist_obj.push(artist);
-                        console.log(artist);
-
-
-                    });
-
             };
         }
     });
-    
 
 
     function cardDisplay(item, object_artist) {
@@ -234,21 +100,20 @@ $(document).ready(function () {
         var newCard = masterCard.clone(true);
         newCard.attr("id", "card" + (item));
         newCard.removeClass("off");
-        newCard.find(".artist-image").attr("src", object_artist.imageURL);
+        newCard.find(".artist-image").attr("src",object_artist.imageURL);
         newCard.find(".artist-name").text(object_artist.name);
-        newCard.find(".genre").text("Genre: " + object_artist.genre);
-        newCard.find(".song").text("Track Name: " + object_artist.songName);
+        newCard.find(".genre").text("Genre: " +object_artist.genre);
+        newCard.find(".song").text("Track Name: " +object_artist.songName);
         newCard.find(".imageClick").attr("src", object_artist.songURL);
-        newCard.attr(artistDescription, artistBio);
         $("#" + (item)).append(newCard);
     };
 
-
+    
     $(document).on("click", ".imageClick", function () {
         console.log(songPlaying);
         console.log($(this).attr("data-audio-status"));
         console.log(playing_id)
-
+        
         if (songPlaying == false) {
             if ($(this).attr("data-audio-status") != "playing") {
                 playAudio = $(this).attr("src");
@@ -277,29 +142,32 @@ $(document).ready(function () {
             }
         }
     });
-
-    $(".modal-trigger").on("click", function () {
+    $(".modal-trigger").on("click", function() {
         // check if shit exists in the database or not
-        // console.log("we got in the function");
-        // var queryURL = "https://cors-anywhere.herokuapp.com/" + "https://itunes.apple.com/search?term=" + $(this).text() + "&limit=25";
-        // console.log(queryURL);
+        $("#artistDescription").empty();
+        var artistClicked = $(this).text()
+        var audioQueryURL = "https://cors-anywhere.herokuapp.com/" + "theaudiodb.com/api/v1/json/1/search.php?s=" + artistClicked;
 
-        // $.ajax({
-        //     url: queryURL,
-        //     method: "GET"
-        // }).then(response => {
-        //     results = JSON.parse(response).results;
-        //     results.forEach(result => {
-        //         renderSongDisplay(result);
-        //     })
+        $.ajax({
+            url: audioQueryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                // console.log(response);
+                var result = response.artists;
+                // console.log("audio" +result);
+                var artistBio = result[0].strBiographyEN;
+                // console.log(typeof artistBio);
+               
+                // console.log(result[0].strBiographyEN);
+                    // console.log(artist);
+                    console.log(artistBio );
+                // console.log(artist);
+                $("#artistDescription").append(artistBio);
 
-        // });
-        var modelId= $(this).closest(".col").attr("id");
-        $("#artistDescription").text(artist_obj[modelId-1]);
+
+            });
 
     });
 
-    $(document).on("click", ".add-music-button", function () {
-        console.log("we clicked this friend");
-    });
 });
