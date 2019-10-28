@@ -49,7 +49,7 @@ function renderSongDisplay(result) {
     newRow = $("#song-display-row").clone();
     newRow.removeClass("hidden");
 
-    var playButton = $(newRow.children()[2]).children()[0];
+    playButton = $(newRow.children()[2]).children()[0];
     
     renderSongDataAttributes(playButton, result);
     $(newRow.children()[1]).text(result.trackName);
@@ -69,7 +69,8 @@ async function getCollectionPromise(collectionName, artistId) {
     console.log("got in the get collection promise function");
     console.log("Looking for: " + artistId + " in " + collectionName + " collection");
     var promise = await db.collection(collectionName).doc(artistId.toString()).get();
-    console.log("this is the promise we got: " + promise);
+    console.log("this is the promise we got: ");
+    console.log({promise});
 
     return promise;
 }
@@ -94,46 +95,56 @@ async function updateDBIfObjectDoesntExist(playButton) {
                 case 0: 
                     console.log("artist was not in db, adding to user and db") 
                     entryAdded = true;
+                    console.log(entryAdded);
                     createArtist(playButton);
                     createArtistSongEntry(playButton);
                     createAlbum(playButton);
                     createAlbumSongEntry(playButton);
                     createSong(playButton);
-                    createUserSongEntry(playButton);
+                    console.log(playButton);
+                    createUserSongEntry(globalUser, playButton);
                     break;
 
                 case 1:
-                    console.log("album was not in db, adding to user and db") 
-
-                    entryAdded = true;
-                    createArtistSongEntry(playButton);
-                    createAlbum(playButton);
-                    createAlbumSongEntry(playButton);
-                    createSong(playButton);
-                    createUserSongEntry(playButton);
-                    break;
-
+                    if(entryAdded) {
+                        break;
+                    } else {
+                        console.log("album was not in db, adding to user and db") 
+                        entryAdded = true;
+                        console.log(entryAdded);
+                        console.log({playButton});
+                        createArtistSongEntry(playButton);
+                        createAlbum(playButton);
+                        createAlbumSongEntry(playButton);
+                        createSong(playButton);
+                        createUserSongEntry(playButton);
+                        break;
+                    }
+                    
                 case 2:
-                    console.log("song was not in db, adding to user and db");
-                    entryAdded = true;
-                    createSong(playButton);
-                    createUserSongEntry(playButton);
-                    createArtistSongEntry(playButton);
-                    break;
-
+                    if(entryAdded) {
+                        break;
+                    } else {
+                        console.log("song was not in db, adding to user and db");
+                        entryAdded = true;
+                        console.log(entryAdded);
+                        createSong(playButton);
+                        createUserSongEntry(playButton);
+                        createArtistSongEntry(playButton);
+                        break;
+                    }
+                    
                 default: 
                     break;
             }
         });
-
-        if(entryAdded) {
-            console.log("there was an entry added, so we got out of the loop");
-            return;
-        }
     });
 }
 
 function createUserSongEntry(userId, playButton) {
+    console.log({userId});
+    console.log({playButton});
+
     db.collection("UsersSongs").add({
         userId: userId,
         songId: parseInt(playButton.attr("data-song-id"))
@@ -141,13 +152,16 @@ function createUserSongEntry(userId, playButton) {
 }
 
 function createArtistSongEntry(playButton) {
-    db.collection("ArtistsAlbums").add({
+    console.log({playButton});
+
+    db.collection("ArtistsSongs").add({
         artistId: parseInt(playButton.attr("data-artist-id")),
-        songId: parseInt(playButton.attr("data-song-id")),
+        songId: parseInt($("").attr("data-song-id")),
     });
 }
 
 function createAlbum(playButton) {
+    console.log({playButton});
     var albumId = playButton.attr("data-album-id").toString();
 
     db.collection("Albums").doc(albumId).set({
@@ -159,6 +173,7 @@ function createAlbum(playButton) {
 }
 
 function createAlbumSongEntry(playButton) {
+    console.log({playButton});
 
     db.collection("AlbumsSongs").add({
         albumId: parseInt(playButton.attr("data-album-id")),
@@ -167,6 +182,8 @@ function createAlbumSongEntry(playButton) {
 }
 
 function createSong(playButton) {
+    console.log({playButton});
+
     var trackId = $(playButton).attr("data-song-id");
 
     db.collection("Songs").doc(trackId).set({
