@@ -30,8 +30,8 @@
 
 <body>
     <nav>
-        <div class="nav-wrapper" style="color:#d32f2f;">
-            <a href="#!" class="brand-logo">QC</a>
+        <div class="nav-wrapper grey">
+            <a href="#!" class="brand-logo"><img src="assets/images/logo_qc_v2.png"></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
                 <li><a class="login-input-link">Login</a></li>
@@ -44,7 +44,7 @@
     </nav>
     <div class="container">
         <header>
-            <h1 style="text-align: center;">Quintessential Curations</h1>
+            <h1 class="bolder">Quintessential Curations</h1>
         </header>
         <div id="user-sign-up-modal" class="modal">
             <div class="modal-content">
@@ -112,7 +112,7 @@
             </div>
         <div class="grid">
             <form class="search-media">
-                <h5>Search for your favorite Artist</h5>
+                <h5><div class="bolder">Search for your favorite Artist</div></h5>
                 <input type="search-media-input" placeholder="Billy Joel" id= "userSearch" autocomplete="off" size="30"></input>
                 <button class="btn-large waves-effect waves-light red darken-3" type="submit" name="action" id="userArtistInput">Search<i class="material-icons right">search</i>
                 </button>
@@ -124,7 +124,7 @@
             </div>
             <div class="master">
                 <div id="card" class="custom-card off">
-                    <div class="card medium">
+                    <div class="card medium hoverable">
                         <div class="card-image">
                             <img class ="artist-image" src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg">
                             <span class="card-title" style="padding: 8px;"><a class="btn-floating btn-medium waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></span> 
@@ -137,8 +137,7 @@
                         </div>
                         <div class="card-action">
                             <!-- added model trigger here - class="modal-trigger" -->
-                                <a href="#modal1" class="modal-trigger"><span class="card-title artist-name" style="font-weight: 400; color: #8f3333; text-transform: none;" >Artist Name</span></a>
-                            <!-- <a class = "song-click" href="https://audio-ssl.itunes.apple.com/itunes-assets/Music/v4/a5/fd/be/a5fdbecc-2df9-3925-b4a0-784c423bbcee/mzaf_6527837479129833721.plus.aac.p.m4a"><i class="small material-icons">play_circle_filled</i> Play Music</a> -->
+                                <a href="#modal1" class="modal-trigger"><span class="card-title artist-name valign-wrapper" style="font-size: 18px;font-weight: 600; color: #8f3333; text-transform: none;" >Artist Name</span></a>
                         </div>
                     </div>
                 </div>
@@ -147,32 +146,32 @@
         <!-- First Row-->
         <div class="row" >
             <!-- First Card-->
-            <div id="1" class="col s3">
+            <div id="1" class="col s6 m6 l3">
             </div>
             <!-- Second Card-->
-            <div id="2" class="col s3">
+            <div id="2" class="col s6 m6 l3">
             </div>
             <!-- Third Card-->
-            <div id="3" class="col s3">
+            <div id="3" class="col s6 m6 l3">
             </div>
             <!-- Fourth Card -->
-            <div  id="4" class="col s3">
+            <div  id="4" class="col s6 m6 l3">
             </div>
         </div>
 ​
         <!-- Second Row-->
         <div class="row">
             <!-- First Card-->
-            <div id="5" class="col s3">
+            <div id="5" class="col s6 m6 l3">
             </div>
             <!-- Second Card-->
-            <div id="6" class="col s3">   
+            <div id="6" class="col s6 m6 l3">   
             </div>
             <!-- Third Card-->
-            <div id="7" class="col s3"> 
+            <div id="7" class="col s6 m6 l3"> 
             </div>
             <!-- Fourth Card -->
-            <div id="8" class="col s3"> 
+            <div id="8" class="col s6 m6 l3"> 
             </div>
         </div>
     </div>
@@ -181,9 +180,9 @@
             <div class="modal-content">
                     <div class="row">
                             <div class="col s12"><h4>Artist Name <i class="small material-icons grey lighten-2">star</i></h4> </div>
-                            <div class="col s3"><img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;"></div>
-                            <div class="col s9" id="artistDescription">
-                                <p><br></p>
+                            <div class="col s3 m4"><img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;"></div>
+                            <div class="col s9 m8" id="artistDescription">
+                                
                             </div>
                           </div>
                 
@@ -199,9 +198,9 @@
                     <tbody class="song-display-table">
                         <tr id="song-display-row" class="hidden">
                             <td style="width:50px"><a class="btn-floating btn-small waves-effect waves-light blue lighten-2"><i data-audio-status = "paused" class="material-icons imageClick">play_circle_filled</i></a></td>
-                            <td class="song-name-display" colspan="2" style="text-align:left;">Song Track here  </td>
+                            <td class="song-name-display" colspan="2" style="text-align:left;">Song Track here </td>
                             <td style="text-align:right;"><a class="btn-floating btn-small waves-effect waves-light red darken-4 add-music-button"><i class="material-icons play-button">add</i></a></td>
-                        </tr> 
+                        </tr>
                     </tbody>
                 </table>
             </div>
