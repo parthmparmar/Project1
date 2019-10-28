@@ -111,6 +111,7 @@ async function updateDBIfObjectDoesntExist(playButton) {
                     entryAdded = true;
                     console.log(entryAdded);
                     createArtist(playButton);
+                    console.log("calling create artist method");
                     createArtistSongEntry(playButton);
                     createAlbum(playButton);
                     createAlbumSongEntry(playButton);
@@ -156,9 +157,6 @@ async function updateDBIfObjectDoesntExist(playButton) {
 }
 
 function createUserSongEntry(userId, playButton) {
-    console.log({ userId });
-    console.log({ playButton });
-
     db.collection("UsersSongs").add({
         userId: userId,
         songId: parseInt(playButton.attr("data-song-id"))
@@ -166,11 +164,13 @@ function createUserSongEntry(userId, playButton) {
 }
 
 function createArtistSongEntry(playButton) {
-    console.log({ playButton });
+    console.log("in artist song entry");
+    console.log(playButton.attr("data-song-id"));
+    console.log(playButton.attr("data-artist-id"));
 
     db.collection("ArtistsSongs").add({
         artistId: parseInt(playButton.attr("data-artist-id")),
-        songId: parseInt($("").attr("data-song-id")),
+        songId: parseInt(playButton.attr("data-song-id")),
     });
 }
 
