@@ -6,7 +6,6 @@
 	font: inherit;
 	vertical-align: baseline;
 }
-
 .grid {
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: minmax(75px, auto);
@@ -119,9 +118,37 @@ input[type=search-media-input] {
 .hidden {
     display: none;
 }
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 768px) {
     #artistDescription{
-        display: none;
+        /* display: none; */
+        max-width: 355px;
+        float: right;
+    }
+  }
+   
+@media only screen and (max-width: 480px) {
+    #artistDescription{
+        /* display: none; */
+        width: 250px;
+        float: right;
+    }
+  }
+  @media only screen and (max-width: 321px) {
+    #artistDescription{
+        /* display: none; */
+        max-width: 20%;
+        float: right; 
+
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    #artistDescription{
+        /* display: none; */
+        width: 20px;
+        font-size: 10px;
+        line-height: 1.5;
+        float: right;
+
     }
   }
    
