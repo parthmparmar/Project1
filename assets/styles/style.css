@@ -119,9 +119,37 @@ input[type=search-media-input] {
 .hidden {
     display: none;
 }
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 768px) {
     #artistDescription{
-        display: none;
+        /* display: none; */
+        width: 300px;
+        float: right;
+
+    }
+  }
+   
+@media only screen and (max-width: 480px) {
+    #artistDescription{
+        /* display: none; */
+        width: 250px;
+        float: right;
+
+    }
+  }
+  @media only screen and (max-width: 321px) {
+    #artistDescription{
+        /* display: none; */
+        width: 250px;
+        /* float: right; */
+
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    #artistDescription{
+        /* display: none; */
+        width: 150px;
+        /* float: right; */
+
     }
   }
    
