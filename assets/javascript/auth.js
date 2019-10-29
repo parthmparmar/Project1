@@ -44,7 +44,7 @@ class Album {
         this.name = obj.name;
         this.genre = obj.genre;
         this.price = obj.price;
-        this.imageUrl = obj.imageUrl;
+        this.imageUrl = Object.values(obj)[1];
     }
 }
 
@@ -79,6 +79,7 @@ async function setUserProfileAlbum(id) {
             albumIds.push(albumId);
 
             var albumData = await db.collection("Albums").doc(albumId.toString()).get();
+            console.log(albumData.data());
             var newAlbum = new Album(albumId, albumData.data());
             globalUserProfile.albums.push(newAlbum);
         }
@@ -97,9 +98,7 @@ async function setUserProfileSongs(promise) {
     promise.then(snapshot => {
         snapshot.docs.forEach(async doc => {
             var id = doc.data().songId.toString();
-            console.log(id);
             var song = await db.collection("Songs").doc(id).get();
-            console.log(song.data());
 
             var newSong = new Song(id, song.data());
             globalUserProfile.songs.push(newSong);

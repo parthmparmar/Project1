@@ -41,6 +41,21 @@ function renderSongDataAttributes(playButton, result) {
     $(playButton).attr(data);
 }
 
+function getCardDisplay(artist, album, song) {
+    console.log("got into get card display method");
+    var cardDisplay = {
+        imageURL: album.imageUrl,
+        name: artist.name,
+        genre: album.genre,
+        songName: song.name,
+        songURL: song.url
+    }
+
+    console.log({cardDisplay});
+
+    return cardDisplay;
+}
+
 function updateUserIfObjectDne(playButton) {
     var userProfileProps = Object.keys(globalUserProfile);
     var ids = [playButton.attr("data-artist-id"), playButton.attr("data-album-id"), playButton.attr("data-song-id")];
@@ -80,11 +95,7 @@ function createArtist(playButton) {
 }
 
 async function getCollectionPromise(collectionName, artistId) {
-    console.log("got in the get collection promise function");
-    console.log("Looking for: " + artistId + " in " + collectionName + " collection");
     var promise = await db.collection(collectionName).doc(artistId.toString()).get();
-    console.log("this is the promise we got: ");
-    console.log({ promise });
 
     return promise;
 }
@@ -107,16 +118,12 @@ async function updateDBIfObjectDoesntExist(playButton) {
 
             switch (i) {
                 case 0:
-                    console.log("artist was not in db, adding to user and db")
                     entryAdded = true;
-                    console.log(entryAdded);
                     createArtist(playButton);
-                    console.log("calling create artist method");
                     createArtistSongEntry(playButton);
                     createAlbum(playButton);
                     createAlbumSongEntry(playButton);
                     createSong(playButton);
-                    console.log(playButton);
                     createUserSongEntry(globalUser, playButton);
                     break;
 
@@ -124,10 +131,7 @@ async function updateDBIfObjectDoesntExist(playButton) {
                     if (entryAdded) {
                         break;
                     } else {
-                        console.log("album was not in db, adding to user and db")
                         entryAdded = true;
-                        console.log(entryAdded);
-                        console.log({ playButton });
                         createArtistSongEntry(playButton);
                         createAlbum(playButton);
                         createAlbumSongEntry(playButton);
@@ -140,9 +144,7 @@ async function updateDBIfObjectDoesntExist(playButton) {
                     if (entryAdded) {
                         break;
                     } else {
-                        console.log("song was not in db, adding to user and db");
                         entryAdded = true;
-                        console.log(entryAdded);
                         createSong(playButton);
                         createUserSongEntry(playButton);
                         createArtistSongEntry(globalUser, playButton);
@@ -164,10 +166,6 @@ function createUserSongEntry(userId, playButton) {
 }
 
 function createArtistSongEntry(playButton) {
-    console.log("in artist song entry");
-    console.log(playButton.attr("data-song-id"));
-    console.log(playButton.attr("data-artist-id"));
-
     db.collection("ArtistsSongs").add({
         artistId: parseInt(playButton.attr("data-artist-id")),
         songId: parseInt(playButton.attr("data-song-id")),
@@ -186,8 +184,6 @@ function createAlbum(playButton) {
 }
 
 function createAlbumSongEntry(playButton) {
-    console.log({ playButton });
-
     db.collection("AlbumsSongs").add({
         albumId: parseInt(playButton.attr("data-album-id")),
         songId: parseInt(playButton.attr("data-song-id"))
@@ -195,8 +191,6 @@ function createAlbumSongEntry(playButton) {
 }
 
 function createSong(playButton) {
-    console.log({ playButton });
-
     var trackId = $(playButton).attr("data-song-id");
 
     db.collection("Songs").doc(trackId).set({
@@ -219,7 +213,6 @@ $(document).ready(function () {
         event.preventDefault();
 
         if ($("#userSearch").val() == "") {
-            console.log("shake");
             $("#empty-alert").removeClass("off");
             $("#userSearch").effect("shake");
         }
@@ -242,7 +235,6 @@ $(document).ready(function () {
 
         function tasteDive(value, type, key, limit) {
             queryURL = "https://cors-anywhere.herokuapp.com/" + "https://tastedive.com/api/similar?q=" + value + "&type=" + type + "&k=" + key + "&limit=" + limit;
-            console.log("test");
             $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -253,14 +245,12 @@ $(document).ready(function () {
 
                 if (resultsArray.length == 0) {
                     error = true;
-                    console.log("error");
                     var error = $("<p>");
                     error.attr("class", "errorStyle");
                     error.text(searchValue + " was not found. Please try again.");
                     $(".main-search-result-continer").append(error);
                 }
                 else {
-                    console.log(artist_obj)
                     callItunesAPI();
                 };
             });
@@ -296,8 +286,10 @@ $(document).ready(function () {
 
     function cardDisplay(item, object_artist) {
         // create cards
+        console.log("got into the render card display method");
         var masterCard = $("#card");
         var newCard = masterCard.clone(true);
+
         newCard.attr("id", "card" + (item));
         newCard.removeClass("off");
         newCard.find(".artist-image").attr("src", object_artist.imageURL);
@@ -306,6 +298,7 @@ $(document).ready(function () {
         newCard.find(".song").text("Track Name: " + object_artist.songName);
         newCard.find(".imageClick").attr("src", object_artist.songURL);
         $("#" + (item)).append(newCard);
+        console.log({newCard});
     }
 
 
@@ -352,7 +345,6 @@ $(document).ready(function () {
             var result = response.artists;
             var artistBio = result[0].strBiographyEN;
 
-            console.log(artistBio);
             $("#artistDescription").append(artistBio);
         });
 
@@ -379,11 +371,23 @@ $(document).ready(function () {
  
 
 
-$(document).on("click", ".add-music-button", function () {
-    playButton = $(this);
-    console.log("we got clicked the add button");
-    updateDBIfObjectDoesntExist(playButton);
-});
+    $(document).on("click", ".add-music-button", function () {
+        playButton = $(this);
+        updateDBIfObjectDoesntExist(playButton);
+    });
+
+    $(".fav-input-btn").on("click", () => {
+        console.log("we got into favorites");
+
+        for(var i = 0; i < globalUserProfile.artists.length; i++) {
+            console.log({i});
+            var artistCardDisplay = getCardDisplay(globalUserProfile.artists[i], globalUserProfile.albums[i], 
+                globalUserProfile.songs[i]);
+            
+            cardDisplay(i + 1, artistCardDisplay);
+        }
+    });
+
+
 });
 
-// console.log(entryAdded);
