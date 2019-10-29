@@ -378,6 +378,7 @@ $(document).ready(function () {
 
     $(".fav-input-btn").on("click", () => {
         console.log("we got into favorites");
+        $(".main-search-result-continer").find(".col").empty();
 
         for(var i = 0; i < globalUserProfile.artists.length; i++) {
             console.log({i});
