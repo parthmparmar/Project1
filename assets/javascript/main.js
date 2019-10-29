@@ -214,6 +214,7 @@ function createSong(playButton) {
 
 $(document).ready(function () {
     $(".modal").modal();
+    $('.sidenav').sidenav();
 
     $("#userArtistInput").on("click", function (event) {
         event.preventDefault();
@@ -310,6 +311,7 @@ $(document).ready(function () {
 
 
     $(document).on("click", ".imageClick", function () {
+        console.log("test");
         if (songPlaying == false) {
             if ($(this).attr("data-audio-status") != "playing") {
                 playAudio = $(this).attr("src");
@@ -340,7 +342,14 @@ $(document).ready(function () {
     });
 
     $(".modal-trigger").on("click", function () {
+        var artistClickedImage = $(this).closest(".col").attr("id");
+        var modalImageUrl = $("#" + artistClickedImage).find(".artist-image").attr("src");
+        console.log(artistClicked);
+        $("#modalArtistImage").attr("src", modalImageUrl);
+        var modalArtistName = $(this).text();
+        $("#modalArtistName").text(modalArtistName);
         $("#artistDescription").empty();
+
 
         var artistClicked = $(this).text();
         var audioQueryURL = "https://cors-anywhere.herokuapp.com/" + "theaudiodb.com/api/v1/json/1/search.php?s=" + artistClicked;

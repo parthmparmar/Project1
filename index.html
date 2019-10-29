@@ -30,7 +30,7 @@
 
 <body>
     <nav>
-        <div class="nav-wrapper grey">
+        <!-- <div class="nav-wrapper grey">
             <a href="#!" class="brand-logo"><img src="assets/images/logo_qc_v2.png"></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
@@ -38,7 +38,25 @@
                 <li><a class="logout-input-link">Logout</a></li>
                 <li><a class="fav-input-btn">Favorites</a></li>
             </ul>
-        </div>
+        </div>  -->
+        <div class="nav-wrapper grey">
+            <a href="#!" class="brand-logo"><img src="assets/images/logo_qc_v2.png"></a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
+                <li><a class="login-input-link">Login</a></li>
+                <li><a class="logout-input-link">Logout</a></li>
+                <!-- Dropdown Trigger -->
+                <li><a class="fav-input-btn">Favorites</a></li>
+            </ul>
+        </div>  
+        <ul class="sidenav" id="mobile-demo">
+                <li><a href="#user-sign-up-modal" class="sign-up-input-link">Sign Up</a></li>
+                <li><a class="login-input-link">Login</a></li>
+                <li><a class="logout-input-link">Logout</a></li>
+                <!-- Dropdown Trigger -->
+                <li><a class="fav-input-btn">Favorites</a></li>
+              </ul>
     </nav>
     <div class="container">
         <header>
@@ -177,8 +195,8 @@
         <div id="modal1" class="modal">
             <div class="modal-content">
                     <div class="row">
-                            <div class="col s12"><h4>Artist Name <i class="small material-icons grey lighten-2">star</i></h4> </div>
-                            <div class="col s3 m4"><img src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;"></div>
+                            <div class="col s12"><h4 id="modalArtistName">Artist Name <i class="small material-icons grey lighten-2">star</i></h4> </div>
+                            <div class="col s3 m4"><img id="modalArtistImage" src="https://is5-ssl.mzstatic.com/image/thumb/Music/v4/96/b5/28/96b5280d-379c-af56-a0f5-1825b7a411b4/source/100x100bb.jpg" alt="Album Image" style="float:left;"></div>
                             <div class="col s9 m8" id="artistDescription">
                                 
                             </div>
