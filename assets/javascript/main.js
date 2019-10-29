@@ -236,7 +236,7 @@ $(document).ready(function () {
 
             var searchValue = $("#userSearch").val().trim().toUpperCase();
 
-            $(".recomendations-result-container").text(searchValue);
+            $(".recomendations-result-container").text("Search results for " + searchValue);
 
             tasteDive(searchValue, searchType, tasteDiveKey, searchLimit);
         };
