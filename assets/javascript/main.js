@@ -8,6 +8,7 @@ var songPlaying = false;
 var results;
 var playButton;
 var entryAdded = false;
+var songID = 0;
 
 
 var searchType = "music";
@@ -55,6 +56,7 @@ function updateUserIfObjectDne(playButton) {
 }
 
 function renderSongDisplay(result) {
+    songID++;
     if (result.wrapperType != "track" || result.kind != "song") {
         return;
     }
@@ -62,7 +64,9 @@ function renderSongDisplay(result) {
     var songDisplayTable = $(".song-display-table");
     newRow = $("#song-display-row").clone();
     newRow.removeClass("hidden");
-
+    newRow.attr("id","m"+songID);
+    newRow.addClass("col")
+    newRow.find(".imageClickModal").attr("src", result.previewUrl);
     playButton = $(newRow.children()[2]).children()[0];
 
     renderSongDataAttributes(playButton, result);
@@ -243,7 +247,6 @@ $(document).ready(function () {
 
         function tasteDive(value, type, key, limit) {
             queryURL = "https://cors-anywhere.herokuapp.com/" + "https://tastedive.com/api/similar?q=" + value + "&type=" + type + "&k=" + key + "&limit=" + limit;
-            console.log("test");
             $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -311,9 +314,9 @@ $(document).ready(function () {
 
 
     $(document).on("click", ".imageClick", function () {
-        console.log("test");
         if (songPlaying == false) {
             if ($(this).attr("data-audio-status") != "playing") {
+                console.log(playing_id)
                 playAudio = $(this).attr("src");
                 audio = new Audio(playAudio);
                 audio.play();
@@ -340,6 +343,39 @@ $(document).ready(function () {
             }
         }
     });
+
+    $(document).on("click", ".imageClickModal", function () {
+        if (songPlaying == false) {
+            if ($(this).attr("data-audio-status") != "playing") {
+                console.log(playing_id)
+                playAudio = $(this).attr("src");
+                audio = new Audio(playAudio);
+                audio.play();
+                $(this).attr("data-audio-status", "playing");
+                songPlaying = true;
+                playing_id = $(this).closest(".col").attr("id");
+            }
+        }
+
+        else if (songPlaying == true) {
+            if ($(this).attr("data-audio-status") == "playing") {
+                audio.pause();
+                $(this).attr("data-audio-status", "paused");
+                songPlaying = false;
+            }
+            else if ($(this).attr("data-audio-status") != "playing") {
+                audio.pause();
+                $("#" + playing_id).find(".imageClickModal").attr("data-audio-status", "paused");
+                playAudio = $(this).attr("src");
+                audio = new Audio(playAudio);
+                audio.play();
+                $(this).attr("data-audio-status", "playing");
+                playing_id = $(this).closest(".col").attr("id");
+            }
+        }
+    });
+
+
 
     $(".modal-trigger").on("click", function () {
         var artistClickedImage = $(this).closest(".col").attr("id");
